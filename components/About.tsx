@@ -112,23 +112,8 @@ export default function About() {
           <motion.div variants={stagger} initial="hidden" animate={inView ? "show" : "hidden"}
             style={{ display: "flex", flexDirection: "column", gap: "0" }}
           >
-            {/* ส่วนของ คะแนน/เกรด (Stats) */}
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.v}
-                variants={fadeUp}
-                style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "baseline",
-                  padding: "1.1rem 0",
-                  borderBottom: "1px solid var(--border)", // ปรับให้ขีดทุกอันเพื่อเตรียมรับกับเซกชัน TA
-                }}
-              >
-                <span style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "-0.01em" }}>{s.v}</span>
-                <span style={{ fontSize: "0.78rem", color: "var(--text-3)", letterSpacing: "0.04em" }}>{s.label}</span>
-              </motion.div>
-            ))}
-
-            {/* ส่วนของ TA Experiences (ย้ายมาฝั่งนี้) */}
+    
+      
             <motion.div variants={fadeUp} style={{ marginTop: "3.5rem" }}>
               <p style={{ fontSize: "0.72rem", color: "var(--text-3)", letterSpacing: "0.1em", marginBottom: "1.5rem" }}>
                 TNI · TEACHING ASSISTANT · 2024 – 2025
