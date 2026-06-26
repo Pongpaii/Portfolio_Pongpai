@@ -38,7 +38,7 @@ export default function About() {
             {[
               {
                 title: "Petty Cash App",
-                role: "Frontend Developer",
+                role: "Junior Developer", // แก้ไขจาก Frontend Developer เป็น Junior Developer
                 points: [
                   "Built Power Apps UI from Figma designs into a functional app",
                   "Designed Gallery & Popup components for smooth business flow",
@@ -80,6 +80,35 @@ export default function About() {
                 </ul>
               </div>
             ))}
+
+            {/* เพิ่มปุ่ม View Resume สไตล์ Minimal */}
+            <motion.div variants={fadeUp} style={{ marginTop: "2rem" }}>
+              <a 
+                href="/resume.pdf" // เปลี่ยนเป็น path ไฟล์ Resume ของคุณ (เช่น เก็บไว้ในโฟลเดอร์ public)
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-block",
+                  padding: "0.6rem 1.2rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  color: "var(--text-1)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "4px",
+                  textDecoration: "none",
+                  transition: "all 0.2s ease-in-out",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "var(--border)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                VIEW RESUME →
+              </a>
+            </motion.div>
           </motion.div>
 
           <motion.div variants={stagger} initial="hidden" animate={inView ? "show" : "hidden"}
