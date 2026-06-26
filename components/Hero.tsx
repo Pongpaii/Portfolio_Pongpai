@@ -206,7 +206,7 @@ export default function Hero() {
               {[
                 { label: "LinkedIn", url: "https://www.linkedin.com/in/pongpai-sodsong" },
                 { label: "GitHub", url: "https://github.com/Pongpaii" },
-                { label: "Resume", url: "/resume.pdf" }
+                { label: "Resume", url: "public/resume.pdf" }
               ].map((link, index) => (
                 <a key={index} href={link.url} target="_blank" rel="noopener noreferrer"
                   style={{
