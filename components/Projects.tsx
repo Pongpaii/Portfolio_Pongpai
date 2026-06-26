@@ -4,12 +4,27 @@ import { useRef, useState, useEffect } from "react";
 
 const projects = [
   {
+    title: "Hybrid Application: RateXChange",
+    year: "2025",
+    stack: "UX/UI Design · Figma · Financial App",
+    desc: "การออกแบบแอปพลิเคชัน Hybrid สำหรับการแลกเปลี่ยนเงินตรา (RateXChange) เน้นการสร้างระบบที่ใช้งานง่าย แม่นยำ และตอบโจทย์ผู้ใช้งานยุคดิจิทัล",
+    image: "/images/rate.png", 
+    video: null,
+    github: "https://github.com/Emperor13/ReactNativeFinalProject",
+    live: "https://www.figma.com/design/GRqPT8humEXzlv1b3nhVel/RateXChange--Copy-?node-id=0-1&t=o0pwbXSgI09TPdkn-1",
+    details: `โปรเจกต์ออกแบบแอปพลิเคชัน Hybrid สำหรับแพลตฟอร์ม RateXChange 
+
+• UI/UX Design: ออกแบบหน้าจอ Interface ที่มีความเป็นโมเดิร์น สบายตา และจัดวางตำแหน่งข้อมูลทางการเงินให้เข้าใจง่ายที่สุด
+• Design System: กำหนด Component และ Style Guide บน Figma เพื่อความสม่ำเสมอของดีไซน์ในทุกๆ หน้าจอ
+• Prototype Development: สร้าง Flow การจำลองการใช้งาน (Interaction) เพื่อให้เห็นภาพการทำงานจริงของระบบได้อย่างสมบูรณ์`,
+  },
+  {
     title: "Software Developer (Internship)",
     year: "2025",
     stack: "Power Platform · SQL Server · D365 API",
     desc: "ฝึกงานตำแหน่ง Software Developer ดูแลการพัฒนาโปรเจกต์ Petty Cash App, ระบบ Asset Audit และทำหน้าที่เป็น QA (Tester) ตรวจสอบระบบแบบ Full Loop",
     image: "/images/intern.jpg",
-    video: null, // ไม่มีวิดีโอ
+    video: null,
 
     details: `ประสบการณ์ฝึกงานพัฒนาซอฟต์แวร์และระบบองค์กร ประกอบด้วย 3 โปรเจกต์หลัก:
 
@@ -34,7 +49,7 @@ const projects = [
     stack: "Python · Streamlit · Image Classification · Kaggle",
     desc: "Hackathon Project — พัฒนา AI ตรวจจับรอยแผลจากแมลงกัดต่อย เพื่อลดภาระค่ารักษาพยาบาลและประเมินอาการเบื้องต้นแก่นักท่องเที่ยว",
     image: "/images/bitebye.jpg",
-    video: "/videos/Bitebye Demo.mp4", // 👈 ใส่ Path วิดีโอตรงนี้ (แนะนำให้อยู่ใน public/videos/)
+    video: "/videos/Bitebye Demo.mp4",
     github: "https://github.com/Pongpaii/BugbiteDetector_AI",
     live: null,
     details: `นวัตกรรมปัญญาประดิษฐ์เพื่อช่วยวิเคราะห์ประเภทและระดับความรุนแรงของบาดแผล พัฒนาขึ้นในงาน Hackathon จำกัดเวลา
@@ -64,7 +79,7 @@ const projects = [
     stack: "UX Research · Design System · Pixel Perfect · Figma",
     desc: "การออกแบบแอปพลิเคชันเพื่อส่งเสริมคุณภาพชีวิตของผู้พิการทางการได้ยิน โดยเน้นกระบวนการทำ User Research และการออกแบบที่ตอบโจทย์ความต้องการที่แท้จริง",
     image: "/images/CCynC.jpg",
-    video: null, // ไม่มีวิดีโอ
+    video: null,
     github: null,
     live: "https://www.figma.com/design/vhDmEIquvKlmrN6EPdDcHO/UX-UI--Copy-?node-id=0-1&p=f",
     details: `โปรเจกต์จบ (Final Project) ออกแบบนวัตกรรมดิจิทัลตามหลัก Inclusive Design เพื่อส่งเสริมคุณภาพชีวิตของผู้พิการทางการได้ยิน
@@ -83,7 +98,7 @@ const projects = [
     stack: "Laravel · PHP · SQL · Bootstrap",
     desc: "แพลตฟอร์มศูนย์กลางสำหรับผู้เล่นการ์ดโปเกม่อนในไทย ช่วยแก้ปัญหาเรื่องการเช็คราคาการ์ดที่ผันผวน ",
     image: "/images/mb1.png",
-    video: "/videos/tcgbanban1.mp4", // 👈 ใส่ Path วิดีโอ TCG ตรงนี้
+    video: "/videos/tcgbanban1.mp4",
     github: "https://github.com/Pongpaii/Banban-TCG",
     live: null,
     details: `เว็บแอปพลิเคชัน E-Commerce และ Community สำหรับกลุ่มผู้เล่น Trading Card Game (TCG) ในประเทศไทย
@@ -99,7 +114,7 @@ const projects = [
     stack: "2D Animation · Content Strategy · Data Analysis",
     desc: "ดูแลการผลิตคอนเทนต์แอนิเมชันแบบครบวงจร บน YouTube & TikTok จนมียอดผู้ติดตามมากกว่า 40,000+ Followers",
     image: "/images/content.jpg",
-    video: null, // ไม่มีวิดีโอ
+    video: null,
     github: null,
     live: null,
     details: `บริหารช่องและผลิตสื่ออนิเมชัน Poip Animation ควบคู่กับการวิเคราะห์ Data เพื่อสร้างการเติบโตของ Community
@@ -113,7 +128,18 @@ const projects = [
 
 function ProjectCard({ p, i, inView, onOpenDetails }: any) {
   const [hovered, setHovered] = useState(false);
+  
+  // เช็คเงื่อนไขชื่อโปรเจกต์ เพื่อเปลี่ยนข้อความบนปุ่ม
   const isHearingApp = p.title.includes("Hearing");
+  const isHybridApp = p.title.includes("Hybrid");
+
+  // เลือกข้อความแสดงผลบนปุ่มตามเงื่อนไข
+  let liveButtonText = "LIVE ↗";
+  if (isHybridApp) {
+    liveButtonText = "FIGMA ↗";
+  } else if (isHearingApp) {
+    liveButtonText = "PROTOTYPE ↗";
+  }
 
   return (
     <motion.div
@@ -217,14 +243,14 @@ function ProjectCard({ p, i, inView, onOpenDetails }: any) {
           {p.live ? (
             <a href={p.live} target="_blank" rel="noreferrer" style={{
               flex: 1, padding: "8px 0", textAlign: "center",
-              background: isHearingApp ? "#0F6E56" : "#171717",
+              background: (isHearingApp || isHybridApp) ? "#0F6E56" : "#171717",
               borderRadius: "2px", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.08em",
               color: "#ffffff", transition: "opacity 0.2s", textDecoration: "none"
             }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.85")}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
             >
-              {isHearingApp ? "PROTOTYPE ↗" : "LIVE ↗"}
+              {liveButtonText}
             </a>
           ) : (
             p.github && (
