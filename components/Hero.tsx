@@ -1,249 +1,315 @@
 "use client";
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, Variants } from "framer-motion";
-import { SiTypescript, SiReact, SiHtml5, SiLaravel, SiFigma } from "react-icons/si";
-import { TbBrandCSharp } from "react-icons/tb";
 
-// ระบุประเภทตัวแปรระนาบเดียวกันเป็น Variants เพื่อไม่ให้ TypeScript บ่นเรื่องข้อผิดพลาดแอนิเมชัน
-const stagger: Variants = { 
-  hidden: {}, 
-  show: { transition: { staggerChildren: 0.1 } } 
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
+import { ArrowUpRight, FileText, Mail, MapPin } from "lucide-react";
+import {
+  SiFigma,
+  SiGithub,
+  SiHtml5,
+  SiLaravel,
+  SiNextdotjs,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+} from "react-icons/si";
+import { FaAws, FaLinkedin } from "react-icons/fa6";
+import { TbBrandCSharp } from "react-icons/tb";
+import { useMediaQuery } from "./useMediaQuery";
+
+const stagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const techStack = [
-  { icon: SiFigma, label: "Figma", color: "#F24E1E" },
-  { icon: SiHtml5, label: "HTML5", color: "#E34F26" },
-  { icon: SiTypescript, label: "TypeScript", color: "#3178C6" },
-  { icon: SiReact, label: "React Native / React", color: "#61DAFB" },
-  { icon: TbBrandCSharp, label: "C#", color: "#239120" },
-  { icon: SiLaravel, label: "Laravel", color: "#FF2D20" },
+const marqueeItems = [
+  { icon: FaAws, label: "AWS" },
+  { icon: SiTypescript, label: "TypeScript" },
+  { icon: SiReact, label: "React / React Native" },
+  { icon: SiNextdotjs, label: "Next.js" },
+  { icon: SiTailwindcss, label: "Tailwind CSS" },
+  { icon: SiFigma, label: "Figma" },
+  { icon: SiLaravel, label: "Laravel" },
+  { icon: TbBrandCSharp, label: "C#" },
+  { icon: SiHtml5, label: "HTML / CSS" },
+];
+
+const quickFacts = [
+  { value: "5 months", label: "Current contract @ Com7 · AWS", highlight: true },
+  { value: "Dec 2026", label: "Contract ends · free from Jan 2027", highlight: true },
+  { value: "3.73", label: "GPA · First Class Honors" },
+  { value: "40K+", label: "Followers built as creator" },
 ];
 
 export default function Hero() {
-  const [isHovered, setIsHovered] = useState(false);
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  
-  const springConfig = { damping: 40, stiffness: 400, mass: 0.4 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const cursorX = useMotionValue(-200);
+  const cursorY = useMotionValue(-200);
+  const [hoveringCta, setHoveringCta] = useState(false);
+
+  const finePointer = useMediaQuery("(pointer: fine)");
+  const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const cursorOn = finePointer && !reduceMotion;
+
+  const springCursorX = useSpring(cursorX, { damping: 40, stiffness: 420, mass: 0.35 });
+  const springCursorY = useSpring(cursorY, { damping: 40, stiffness: 420, mass: 0.35 });
 
   useEffect(() => {
+    if (!cursorOn) return;
     const move = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
-  }, [cursorX, cursorY]);
-
-  const buttonStyle = {
-    padding: "12px 24px",
-    borderRadius: "4px",
-    fontSize: "0.75rem",
-    fontWeight: 600,
-    letterSpacing: "0.08em",
-    textTransform: "uppercase" as const,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-    cursor: "pointer",
-    textDecoration: "none",
-  };
+  }, [cursorOn, cursorX, cursorY]);
 
   return (
-    <>
-      {/* Premium Blend-mode Cursor */}
+    <section
+      id="top"
+      style={{
+        position: "relative",
+        minHeight: "100svh",
+        display: "flex",
+        alignItems: "center",
+        paddingTop: "calc(var(--nav-h) + 3rem)",
+        paddingBottom: "3.5rem",
+        overflow: "hidden",
+      }}
+    >
+      {cursorOn && (
+        <motion.div
+          aria-hidden
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 200,
+            pointerEvents: "none",
+            mixBlendMode: "difference",
+            x: springCursorX,
+            y: springCursorY,
+            translateX: "-50%",
+            translateY: "-50%",
+            width: hoveringCta ? 46 : 12,
+            height: hoveringCta ? 46 : 12,
+            borderRadius: "50%",
+            background: "#fff",
+          }}
+          transition={{ type: "tween", ease: "backOut", duration: 0.28 }}
+        />
+      )}
+
+      <div className="aurora" aria-hidden>
+        <span className="a1" />
+        <span className="a2" />
+        <span className="a3" />
+      </div>
+      <div className="grid-lines" aria-hidden />
+
       <motion.div
-        style={{
-          position: "fixed", top: 0, left: 0, zIndex: 9999,
-          pointerEvents: "none", mixBlendMode: "difference",
-          x: cursorXSpring, y: cursorYSpring,
-          translateX: "-50%", translateY: "-50%",
-          width: isHovered ? 48 : 10,
-          height: isHovered ? 48 : 10,
-          borderRadius: "50%",
-          backgroundColor: "var(--text, #fff)",
-        }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.3 }}
-      />
+        className="shell"
+        variants={stagger}
+        initial="hidden"
+        animate="show"
+        style={{ position: "relative", zIndex: 1 }}
+      >
+        <motion.div variants={fadeUp} style={{ marginBottom: "1.5rem" }}>
+          <span className="chip mono" style={{ textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            <span className="dot-live" aria-hidden />
+            On a 5-month contract at Com7 · AWS — until Dec 2026
+          </span>
+        </motion.div>
 
-      <section style={{
-        minHeight: "100vh", display: "flex", flexDirection: "column",
-        justifyContent: "center", padding: "0 2.5rem",
-        borderBottom: "1px solid var(--border)", position: "relative",
-        background: "var(--background)", overflow: "hidden"
-      }}>
-        {/* ครอบด้วยผืนแอนิเมชันใหญ่ (Stagger) */}
-        <motion.div variants={stagger} initial="hidden" animate="show"
-          style={{ maxWidth: "1080px", margin: "0 auto", width: "100%" }}
+        <motion.h1
+          variants={fadeUp}
+          className="display"
+          style={{ fontSize: "clamp(2rem, 5.2vw, 3.4rem)", marginBottom: "0.9rem" }}
         >
-          {/* Eyebrow */}
-          <motion.p variants={fadeUp} style={{
-            fontSize: "0.68rem", color: "var(--text-3)",
-            letterSpacing: "0.2em", marginBottom: "1.5rem", fontWeight: 500
-          }}>
-            PORTFOLIO — 2026
-          </motion.p>
+          Pongpai Sodsong
+        </motion.h1>
 
-          {/* Name + role */}
-          <motion.div variants={fadeUp} style={{ marginBottom: "1.5rem" }}>
-            <h1 style={{
-              fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700,
-              letterSpacing: "-0.04em", lineHeight: 1.1, marginBottom: "0.5rem"
-            }}>
-              Pongpai Sodsong
-            </h1>
-            <p style={{
-              fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)", color: "var(--text-2)",
-              fontWeight: 400, letterSpacing: "-0.02em", opacity: 0.9
-            }}>
-              Junior Developer <span style={{ color: "var(--text-3)", fontWeight: 300 }}></span> 
+        <motion.p
+          variants={fadeUp}
+          style={{
+            fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)",
+            color: "var(--text-2)",
+            fontWeight: 500,
+            letterSpacing: "-0.01em",
+            marginBottom: "1.5rem",
+          }}
+        >
+          IT Support / Teaching Assistant{" "}
+          <span style={{ color: "var(--text-3)" }}>@ Com7 · AWS</span> —{" "}
+          <span className="grad-text">Frontend &amp; UX-minded developer</span>
+        </motion.p>
+
+        <div className="two-col" style={{ alignItems: "end", marginBottom: "2.5rem" }}>
+          <motion.div variants={fadeUp}>
+            <p className="lede" style={{ maxWidth: "46ch" }}>
+              I support the Education and Enterprise team at Com7 on AWS, mainly as a TA debugging
+              live classrooms for the BOI STEM+ camp. It&apos;s a{" "}
+              <strong style={{ color: "var(--text)", fontWeight: 600 }}>
+                5-month contract that ends in December 2026
+              </strong>
+              , so I&apos;m already talking to teams about what comes next.
             </p>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.1rem",
+                flexWrap: "wrap",
+                marginTop: "1.25rem",
+                fontSize: "0.8rem",
+                color: "var(--text-3)",
+              }}
+            >
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                <MapPin size={14} /> Bangkok · Phatthanakan
+              </span>
+              <span style={{ width: 1, height: 12, background: "var(--border)" }} aria-hidden />
+              <span style={{ color: "var(--accent)", fontWeight: 600 }}>
+                Available from January 2027
+              </span>
+            </div>
           </motion.div>
 
-          {/* Tech Stack Icons */}
-          <motion.div 
+          <motion.div
             variants={fadeUp}
-            style={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: "1.2rem", 
-              marginBottom: "2rem",
-              background: "rgba(255,255,255,0.03)", 
-              padding: "10px 16px",
-              borderRadius: "8px",
-              width: "fit-content",
-              border: "1px solid rgba(255,255,255,0.05)"
-            }}
+            onMouseEnter={() => setHoveringCta(true)}
+            onMouseLeave={() => setHoveringCta(false)}
+            style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}
           >
-            <span style={{ fontSize: "0.7rem", color: "var(--text-3)", letterSpacing: "0.05em", marginRight: "0.5rem" }}>
-              
-            </span>
-            {techStack.map((tech, idx) => {
-              const IconComponent = tech.icon;
+            <a href="mailto:pongpai1112@gmail.com" className="btn btn-primary">
+              <Mail size={15} /> Send email
+            </a>
+            <a
+              href="https://www.linkedin.com/in/pongpai-sodsong"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn"
+            >
+              <FaLinkedin size={14} /> LinkedIn <ArrowUpRight size={14} />
+            </a>
+            <a
+              href="https://github.com/Pongpaii"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn"
+            >
+              <SiGithub size={14} /> GitHub <ArrowUpRight size={14} />
+            </a>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn">
+              <FileText size={15} /> Resume <ArrowUpRight size={14} />
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Quick facts */}
+        <motion.dl
+          variants={fadeUp}
+          className="glass"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gap: "1px",
+            padding: 0,
+            overflow: "hidden",
+            marginBottom: "2.5rem",
+          }}
+        >
+          {quickFacts.map((f) => (
+            <div
+              key={f.label}
+              style={{
+                padding: "1.1rem 1.25rem",
+                boxShadow: "0 0 0 1px var(--border)",
+                background: f.highlight
+                  ? "color-mix(in srgb, var(--accent) 8%, transparent)"
+                  : "transparent",
+              }}
+            >
+              <dt
+                className="display"
+                style={{
+                  fontSize: "1.35rem",
+                  letterSpacing: "-0.02em",
+                  marginBottom: "0.3rem",
+                  color: f.highlight ? "var(--accent)" : "var(--text)",
+                }}
+              >
+                {f.value}
+              </dt>
+              <dd style={{ fontSize: "0.75rem", color: "var(--text-3)", lineHeight: 1.5 }}>
+                {f.label}
+              </dd>
+            </div>
+          ))}
+        </motion.dl>
+
+        {/* Tech marquee */}
+        <motion.div variants={fadeUp} className="marquee" aria-hidden>
+          <div className="marquee-track">
+            {[...marqueeItems, ...marqueeItems].map((item, i) => {
+              const Icon = item.icon;
               return (
-                <motion.div
-                  key={idx}
-                  whileHover={{ y: -4, scale: 1.1 }}
-                  style={{ 
-                    position: "relative", 
-                    display: "flex", 
-                    cursor: "pointer",
-                    color: "var(--text-2)" 
+                <span
+                  key={`${item.label}-${i}`}
+                  className="mono"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontSize: "0.74rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--text-3)",
+                    whiteSpace: "nowrap",
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = tech.color;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "var(--text-2)";
-                  }}
-                  title={tech.label}
                 >
-                  <IconComponent size={22} style={{ transition: "color 0.2s ease" }} />
-                </motion.div>
+                  <Icon size={16} /> {item.label}
+                </span>
               );
             })}
-          </motion.div>
-
-          {/* Location + status */}
-          <motion.div variants={fadeUp} style={{
-            display: "flex", alignItems: "center", gap: "1.5rem",
-            marginBottom: "3.5rem", flexWrap: "wrap",
-          }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "0.8rem", color: "var(--text-2)" }}>
-              <span style={{ 
-                width: 6, height: 6, borderRadius: "50%", background: "#22c55e", 
-                boxShadow: "0 0 12px #22c55e" 
-              }} />
-              Bangkok · Phatthanakan
-            </span>
-            <span style={{ width: "1px", height: "12px", background: "var(--border)" }} />
-            <span style={{ fontSize: "0.8rem", color: "var(--text-3)", letterSpacing: "0.02em" }}>Available for hire</span>
-          </motion.div>
-
-          {/* Bottom Layout Split */}
-          <div style={{
-            display: "flex", justifyContent: "space-between", alignItems: "flex-end",
-            gap: "3rem", flexWrap: "wrap"
-          }}>
-            
-            {/* Bio */}
-            <motion.p variants={fadeUp} style={{
-              fontSize: "1rem", color: "var(--text-2)", lineHeight: 1.8,
-              maxWidth: "560px", margin: 0, flex: "1 1 450px", fontWeight: 400
-            }}>
-              Multimedia Technology grad, First Class Honors. An agile learner who loves hands-on experimentation. 
-              I bridge the gap between design and development — blending Figma prototyping with TypeScript coding 
-              to build seamless digital experiences.
-            </motion.p>
-
-            {/* Buttons Group */}
-            <motion.div variants={fadeUp} style={{ 
-              display: "flex", gap: "0.75rem", flexWrap: "wrap", flex: "1 1 auto", justifyContent: "flex-start"
-            }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <a href="mailto:pongpai1112@gmail.com"
-                style={{
-                  ...buttonStyle,
-                  background: "var(--text)", color: "var(--background, #fff)",
-                  border: "1px solid var(--text)",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
-              >
-                Send Email &nbsp;↗
-              </a>
-              
-              {[
-                { label: "LinkedIn", url: "https://www.linkedin.com/in/pongpai-sodsong" },
-                { label: "GitHub", url: "https://github.com/Pongpaii" },
-                { label: "Resume", url: "/resume.pdf" }
-              ].map((link, index) => (
-                <a key={index} href={link.url} target="_blank" rel="noopener noreferrer"
-                  style={{
-                    ...buttonStyle,
-                    border: "1px solid var(--border)", color: "var(--text)", background: "transparent",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "var(--text)";
-                    e.currentTarget.style.background = "var(--border)";
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "var(--border)";
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
-                >
-                  {link.label} &nbsp;↗
-                </a>
-              ))}
-            </motion.div>
           </div>
         </motion.div>
+      </motion.div>
 
-        {/* Scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} transition={{ delay: 1.5 }}
-          style={{ position: "absolute", bottom: "2rem", left: "2.5rem", 
-            fontSize: "0.68rem", color: "var(--text-3)", letterSpacing: "0.15em",
-            display: "flex", alignItems: "center", gap: "8px" }}
+      <motion.a
+        href="#projects"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+        className="mono"
+        style={{
+          position: "absolute",
+          bottom: "1.25rem",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 1,
+          fontSize: "0.66rem",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: "var(--text-3)",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.5rem",
+        }}
+      >
+        <motion.span
+          animate={{ y: [0, 4, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <motion.span animate={{ y: [0, 4, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-            ↓
-          </motion.span>
-          <span>SCROLL TO DISCOVER</span>
-        </motion.div>
-      </section>
-    </>
+          ↓
+        </motion.span>
+        Scroll
+      </motion.a>
+    </section>
   );
 }

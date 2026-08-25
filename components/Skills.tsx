@@ -1,151 +1,162 @@
 "use client";
-import { motion, useInView, AnimatePresence, Variants } from "framer-motion";
+
 import { useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, type Variants } from "framer-motion";
 import {
-  SiReact,
-  SiTypescript,
-  SiNextdotjs,
-  SiHtml5,
-  SiTailwindcss,
   SiFigma,
-  SiLaravel,
-  SiPython,
   SiGithub,
   SiGooglecolab,
+  SiHtml5,
+  SiLaravel,
+  SiNextdotjs,
+  SiPython,
+  SiReact,
   SiStreamlit,
+  SiTailwindcss,
+  SiTypescript,
   SiUnity,
   SiVercel,
 } from "react-icons/si";
-import {
-  TbAutomation,
-  TbApps,
-  TbApi,
-  TbDatabase,
-  TbCode,
-} from "react-icons/tb";
+import { FaAws } from "react-icons/fa6";
+import { TbApi, TbApps, TbAutomation, TbBrandCSharp, TbDatabase, TbHeadset } from "react-icons/tb";
 
-const stacks = [
+type Skill = { name: string; icon: React.ComponentType<{ size?: number }>; color: string };
+
+const stacks: { group: string; blurb: string; items: Skill[] }[] = [
   {
     group: "Frontend",
+    blurb: "Interfaces I can design and then actually build",
     items: [
-      { name: "React Native", icon: SiReact, color: "#61DAFB" },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-      { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
-      { name: "HTML / CSS", icon: SiHtml5, color: "#E34F26" },
+      { name: "React / React Native", icon: SiReact, color: "#61DAFB" },
+      { name: "Next.js", icon: SiNextdotjs, color: "currentColor" },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "HTML / CSS", icon: SiHtml5, color: "#E34F26" },
       { name: "Figma", icon: SiFigma, color: "#F24E1E" },
     ],
   },
   {
     group: "Backend & Data",
+    blurb: "Where the business logic lives",
     items: [
       { name: "PHP / Laravel", icon: SiLaravel, color: "#FF2D20" },
       { name: "Python", icon: SiPython, color: "#3776AB" },
-      { name: "SQL", icon: TbDatabase, color: "#336791" },
-      { name: "Power Automate", icon: TbAutomation, color: "#2563EB" },
-      { name: "C#", icon: TbCode, color: "#239120" }, 
-      { name: "REST API", icon: TbApi, color: "#007ACC" },
+      { name: "SQL / SSMS", icon: TbDatabase, color: "#4A90D9" },
+      { name: "C#", icon: TbBrandCSharp, color: "#8B5CF6" },
+      { name: "REST API", icon: TbApi, color: "#22C55E" },
+      { name: "Power Automate", icon: TbAutomation, color: "#3B82F6" },
     ],
   },
   {
-    group: "Tools",
+    group: "Cloud & Support",
+    blurb: "Current focus at Com7",
     items: [
-      { name: "Git / GitHub", icon: SiGithub, color: "#FFFFFF" },
-      { name: "Power Apps", icon: TbApps, color: "#742774" },
+      { name: "AWS", icon: FaAws, color: "#FF9900" },
+      { name: "Classroom / Lab support", icon: TbHeadset, color: "#F472B6" },
+      { name: "Power Apps", icon: TbApps, color: "#A855F7" },
+      { name: "Git / GitHub", icon: SiGithub, color: "currentColor" },
+      { name: "Vercel", icon: SiVercel, color: "currentColor" },
+      { name: "Unity", icon: SiUnity, color: "#94A3B8" },
+    ],
+  },
+  {
+    group: "Data & Experiments",
+    blurb: "Prototyping and AI side quests",
+    items: [
       { name: "Google Colab", icon: SiGooglecolab, color: "#F9AB00" },
       { name: "Streamlit", icon: SiStreamlit, color: "#FF4B4B" },
-      { name: "Unity", icon: SiUnity, color: "#FFFFFF" },
-      { name: "Vercel", icon: SiVercel, color: "#FFFFFF" },
     ],
   },
 ];
 
-const allItems = stacks.flatMap((s) =>
-  s.items.map((item) => ({ ...item, group: s.group })),
-);
+const allItems = stacks.flatMap((s) => s.items);
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.04 } },
-};
+const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.05 } } };
+
+function SkillRow({ item }: { item: Skill }) {
+  const [hover, setHover] = useState(false);
+  const Icon = item.icon;
+
+  return (
+    <motion.li
+      variants={fadeUp}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0.8rem",
+        padding: "0.55rem 0.2rem",
+        color: hover ? "var(--text)" : "var(--text-2)",
+        transform: hover ? "translateX(5px)" : "none",
+        transition: "color .25s, transform .35s var(--ease)",
+      }}
+    >
+      <span
+        style={{
+          display: "flex",
+          color: hover ? item.color : "var(--text-3)",
+          transition: "color .25s",
+        }}
+      >
+        <Icon size={18} />
+      </span>
+      <span style={{ fontSize: "0.88rem", fontWeight: 500 }}>{item.name}</span>
+    </motion.li>
+  );
+}
 
 export default function Skills() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
   const [view, setView] = useState<"list" | "cloud">("list");
 
   return (
-    <section
-      id="skills"
-      ref={ref}
-      style={{
-        padding: "7rem 2.5rem",
-        borderBottom: "1px solid var(--border)",
-        background: "var(--background)",
-      }}
-    >
-      <div style={{ maxWidth: "960px", margin: "0 auto" }}>
-        {/* Header row */}
+    <section id="skills" ref={ref} className="section">
+      <div className="shell">
         <div
           style={{
             display: "flex",
+            alignItems: "flex-end",
             justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "4rem",
+            gap: "1.5rem",
+            flexWrap: "wrap",
+            marginBottom: "3rem",
           }}
         >
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            style={{
-              fontSize: "0.68rem",
-              color: "var(--text-3)",
-              letterSpacing: "0.2em",
-              fontWeight: 600,
-            }}
-          >
-            SKILLS & TECHNOLOGIES
-          </motion.p>
-
-          {/* Toggle Switch - ปรับกลับมาใช้สไตล์เหลี่ยมเรียบหรูแบบตอนแรกสุด */}
           <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p className="eyebrow" style={{ marginBottom: "1.1rem" }}>
+              Toolkit
+            </p>
+            <h2 className="section-title">Skills & technologies</h2>
+          </motion.div>
+
+          <motion.div
+            className="segmented"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.3 }}
-            style={{
-              display: "flex",
-              border: "1px solid var(--border)",
-              borderRadius: "2px",
-              overflow: "hidden",
-            }}
+            transition={{ delay: 0.25 }}
+            role="group"
+            aria-label="Skills display mode"
           >
             {(["list", "cloud"] as const).map((v) => (
               <button
                 key={v}
+                type="button"
+                data-active={view === v}
+                aria-pressed={view === v}
                 onClick={() => setView(v)}
-                style={{
-                  padding: "6px 16px",
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.08em",
-                  cursor: "pointer",
-                  border: "none",
-                  background: view === v ? "var(--text)" : "transparent",
-                  color: view === v ? "#fff" : "var(--text-3)",
-                  transition: "all 0.2s",
-                }}
               >
-                {v.toUpperCase()}
+                {v}
               </button>
             ))}
           </motion.div>
@@ -153,184 +164,75 @@ export default function Skills() {
 
         <AnimatePresence mode="wait">
           {view === "list" ? (
-            /* 1. LIST VIEW */
             <motion.div
               key="list"
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                gap: "2.5rem",
-              }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="grid-auto"
             >
-              {stacks.map((s, si) => (
+              {stacks.map((s) => (
                 <motion.div
                   key={s.group}
+                  className="glass"
                   variants={stagger}
                   initial="hidden"
                   animate={inView ? "show" : "hidden"}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                  }}
+                  style={{ padding: "1.4rem 1.5rem" }}
                 >
-                  <motion.p
-                    variants={fadeUp}
+                  <p
+                    className="mono"
                     style={{
-                      fontSize: "0.7rem",
-                      color: "var(--text-3)",
-                      letterSpacing: "0.15em",
-                      marginBottom: "1rem",
-                      fontWeight: 600,
-                      borderBottom: "1px solid var(--border)",
-                      paddingBottom: "0.5rem",
+                      fontSize: "0.68rem",
+                      letterSpacing: "0.13em",
+                      textTransform: "uppercase",
+                      color: "var(--accent)",
+                      marginBottom: "0.35rem",
                     }}
                   >
-                    {s.group.toUpperCase()}
-                  </motion.p>
-
-                  {s.items.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <motion.div
-                        key={item.name}
-                        variants={fadeUp}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "1rem",
-                          padding: "0.75rem 0.5rem",
-                          borderBottom: "1px solid rgba(255,255,255,0.03)",
-                          borderRadius: "4px",
-                          color: "var(--text-2)",
-                          transition: "all 0.2s",
-                        }}
-                        whileHover={{ x: 6, color: "var(--text)" }}
-                        onMouseEnter={(e) => {
-                          const iconEl = e.currentTarget.querySelector(
-                            ".skill-icon",
-                          ) as HTMLElement;
-                          if (iconEl) iconEl.style.color = item.color;
-                        }}
-                        onMouseLeave={(e) => {
-                          const iconEl = e.currentTarget.querySelector(
-                            ".skill-icon",
-                          ) as HTMLElement;
-                          if (iconEl) iconEl.style.color = "var(--text-3)";
-                        }}
-                      >
-                        <div
-                          className="skill-icon"
-                          style={{
-                            color: "var(--text-3)",
-                            display: "flex",
-                            transition: "color 0.2s",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Icon size={20} />
-                        </div>
-                        <span
-                          style={{
-                            fontSize: "0.92rem",
-                            fontWeight: 500,
-                            letterSpacing: "-0.01em",
-                          }}
-                        >
-                          {item.name}
-                        </span>
-                      </motion.div>
-                    );
-                  })}
+                    {s.group}
+                  </p>
+                  <p style={{ fontSize: "0.78rem", color: "var(--text-3)", marginBottom: "1rem" }}>
+                    {s.blurb}
+                  </p>
+                  <ul style={{ listStyle: "none", display: "grid" }}>
+                    {s.items.map((item) => (
+                      <SkillRow key={item.name} item={item} />
+                    ))}
+                  </ul>
                 </motion.div>
               ))}
             </motion.div>
           ) : (
-            /* 2. CLOUD VIEW */
             <motion.div
               key="cloud"
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "0.75rem",
-                alignItems: "center",
+                gap: "0.6rem",
                 justifyContent: "center",
-                padding: "2rem 0",
+                padding: "1.5rem 0",
               }}
             >
-              {allItems.map(({ name, icon: Icon, color }, i) => {
+              {allItems.map((item, i) => {
+                const Icon = item.icon;
                 return (
-                  <motion.div
-                    key={name}
-                    initial={{ opacity: 0, scale: 0.85 }}
+                  <motion.span
+                    key={item.name}
+                    className="chip"
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      delay: i * 0.02,
-                      duration: 0.5,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.6rem",
-                      padding: "10px 18px",
-                      border: "1px solid var(--border)",
-                      borderRadius: "99px",
-                      color: "var(--text-2)",
-                      background: "rgba(255,255,255,0.01)",
-                      backdropFilter: "blur(4px)",
-                      cursor: "pointer",
-                      transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = color;
-                      e.currentTarget.style.color = "var(--text)";
-                      e.currentTarget.style.boxShadow = `0 4px 20px ${color}15`;
-                      const iconEl = e.currentTarget.querySelector(
-                        ".cloud-icon",
-                      ) as HTMLElement;
-                      if (iconEl) iconEl.style.color = color;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "var(--border)";
-                      e.currentTarget.style.color = "var(--text-2)";
-                      e.currentTarget.style.boxShadow = "none";
-                      const iconEl = e.currentTarget.querySelector(
-                        ".cloud-icon",
-                      ) as HTMLElement;
-                      if (iconEl) iconEl.style.color = "var(--text-2)";
-                    }}
-                    title={name}
+                    transition={{ delay: i * 0.02, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ fontSize: "0.82rem", padding: "0.55rem 1rem" }}
                   >
-                    <div
-                      className="cloud-icon"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        transition: "color 0.3s",
-                      }}
-                    >
-                      <Icon size={18} />
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "0.85rem",
-                        fontWeight: 500,
-                        letterSpacing: "-0.01em",
-                      }}
-                    >
-                      {name}
-                    </span>
-                  </motion.div>
+                    <Icon size={16} />
+                    {item.name}
+                  </motion.span>
                 );
               })}
             </motion.div>

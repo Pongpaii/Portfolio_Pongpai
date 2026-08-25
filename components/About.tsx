@@ -1,145 +1,195 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+
 import { useRef } from "react";
+import { motion, useInView, type Variants } from "framer-motion";
+import { Award, GraduationCap, Languages } from "lucide-react";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } },
 };
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
-const stats = [
-  { v: "3.73", label: "GPA — First Class Honors" },
-  { v: "TOEIC 705", label: "English Proficiency" },
-  { v: "JLPT N4", label: "Japanese Ability" },
-  { v: "4 mo", label: "Internship @ A-HOST" },
+const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.09 } } };
+
+type Role = {
+  org: string;
+  title: string;
+  period: string;
+  place: string;
+  current?: boolean;
+  tags: string[];
+  points: string[];
+};
+
+const roles: Role[] = [
+  {
+    org: "Com7 Public Company Limited",
+    title: "IT Support / Teaching Assistant — AWS",
+    period: "2026 — Present",
+    place: "Bangkok",
+    current: true,
+    tags: ["AWS", "IT Support", "Teaching Assistant", "Troubleshooting"],
+    points: [
+      "Support the Education and Enterprise team on AWS-related work and day-to-day technical requests.",
+      "Main duty: Teaching Assistant for the BOI STEM+ camp classrooms hosted at Koon Hotel.",
+      "Debug issues live during class so instructors and students never lose momentum.",
+    ],
+  },
+  {
+    org: "A-HOST Co., Ltd.",
+    title: "Software Developer (Internship)",
+    period: "Dec 2025 — Mar 2026",
+    place: "Bangkok",
+    tags: ["Power Apps", "Power Automate", "SQL Server", "D365 API", "QA"],
+    points: [
+      "Petty Cash App — turned Figma designs into a working Power Apps solution, building gallery and popup flows around real approval steps.",
+      "Asset Audit System — wrote SQL stored procedures on SSMS for data versioning and built Power Automate flows against the D365 API.",
+      "QA & documentation — ran full-loop tests simulating real user journeys, reported bugs with senior devs, and revised the user manual.",
+    ],
+  },
+  {
+    org: "Thai-Nichi Institute of Technology",
+    title: "Teaching Assistant — Java & C#",
+    period: "2024 — 2025",
+    place: "Bangkok",
+    tags: ["Java", "C#", "Mentoring", "Lab support"],
+    points: [
+      "MTE-107 Object-Oriented Programming — guided first-year students through OOP concepts and debugged syntax, logic, and runtime errors in labs.",
+      "MTE-105 Fundamentals of Multimedia Programming — supported faculty in class and helped students resolve C# errors.",
+      "Proctored mid-term and final exams to keep the testing environment fair and calm.",
+    ],
+  },
+];
+
+const credentials = [
+  {
+    icon: GraduationCap,
+    title: "B.Tech Multimedia Technology",
+    detail: "Thai-Nichi Institute of Technology · GPA 3.73",
+  },
+  { icon: Award, title: "First Class Honors", detail: "Graduated with distinction" },
+  { icon: Languages, title: "TOEIC 705 · JLPT N4", detail: "English & Japanese proficiency" },
 ];
 
 export default function About() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
-  const internshipExperiences = [
-    {
-      title: "Petty Cash App",
-      role: "Junior Developer",
-      points: [
-        "Built Power Apps UI from Figma designs into a functional app",
-        "Designed Gallery & Popup components for smooth business flow",
-        "Iterated based on meeting feedback to match org requirements",
-      ],
-    },
-    {
-      title: "Asset Audit System",
-      role: "Backend & Integration",
-      points: [
-        "Wrote SQL Stored Procedures on SSMS for complex data & versioning",
-        "Built Power Automate flows connecting to D365 API for asset sync",
-        "Optimised data loading via Power Apps Collections",
-      ],
-    },
-    {
-      title: "QA & Documentation",
-      role: "Tester",
-      points: [
-        "Full-loop testing simulating real end-to-end user flows",
-        "Reported and tracked bugs with senior developers",
-        "Revised User Manual documentation as assigned",
-      ],
-    },
-  ];
-
-  const taExperiences = [
-    {
-      title: "MTE-107 Object-Oriented Programming for Multimedia",
-      role: "Teaching Assistant (Java)",
-      points: [
-        "Guided 1st-year students through basic Java and Object-Oriented Programming concepts",
-        "Debugged syntax, logical, and runtime errors during practical lab sessions",
-        "Proctored mid-term and final examinations to ensure academic integrity",
-      ],
-    },
-    {
-      title: "MTE-105 Fundamental of Multimedia Programming",
-      role: "Teaching Assistant (C#)",
-      points: [
-        "Supported faculty members in managing a classroom of 1st-year students",
-        "Assisted students with troubleshooting and resolving basic C# programming errors",
-        "Proctored examinations and maintained an optimal testing environment",
-      ],
-    },
-  ];
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section id="about" ref={ref} style={{ padding: "7rem 2.5rem", borderBottom: "1px solid var(--border)" }}>
+    <section id="about" ref={ref} className="section">
       <motion.div
-        variants={stagger} initial="hidden" animate={inView ? "show" : "hidden"}
-        style={{ maxWidth: "900px", margin: "0 auto" }}
+        className="shell two-col two-col-sticky"
+        variants={stagger}
+        initial="hidden"
+        animate={inView ? "show" : "hidden"}
       >
-        <motion.p variants={fadeUp} style={{ fontSize: "0.72rem", color: "var(--text-3)", letterSpacing: "0.14em", marginBottom: "3rem" }}>
-          ABOUT
-        </motion.p>
+        {/* Left — heading + credentials */}
+        <motion.div variants={fadeUp} className="sticky-side">
+          <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>
+            Experience
+          </p>
+          <h2 className="section-title" style={{ marginBottom: "1.25rem" }}>
+            From classrooms to
+            <br />
+            production systems.
+          </h2>
+          <p className="lede" style={{ marginBottom: "2rem", maxWidth: "42ch" }}>
+            I move between supporting people and building software — teaching, debugging, and
+            shipping. Both sides make me faster at spotting what actually breaks.
+          </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
-          
-          {/* ================= ฝั่งซ้าย: INTERNSHIP ================= */}
-          <motion.div variants={fadeUp}>
-            <p style={{ fontSize: "0.72rem", color: "var(--text-3)", letterSpacing: "0.1em", marginBottom: "1.5rem" }}>
-              A-HOST CO., LTD · DEC 2025 – MAR 2026 · BANGKOK
-            </p>
-
-            {internshipExperiences.map((exp, i) => (
-              <div key={exp.title} style={{
-                paddingBottom: "1.25rem",
-                marginBottom: "1.25rem",
-                borderBottom: i < internshipExperiences.length - 1 ? "1px solid var(--border)" : "none",
-              }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.3rem" }}>
-                  <p style={{ fontSize: "0.9rem", fontWeight: 700, letterSpacing: "-0.01em" }}>{exp.title}</p>
-                  <p style={{ fontSize: "0.7rem", color: "var(--text-3)", letterSpacing: "0.06em" }}>{exp.role.toUpperCase()}</p>
+          <div style={{ display: "grid", gap: "0.6rem" }}>
+            {credentials.map((c) => {
+              const Icon = c.icon;
+              return (
+                <div
+                  key={c.title}
+                  className="glass"
+                  style={{ display: "flex", gap: "0.85rem", padding: "0.9rem 1rem", alignItems: "flex-start" }}
+                >
+                  <span style={{ color: "var(--accent)", marginTop: 2 }}>
+                    <Icon size={17} />
+                  </span>
+                  <span>
+                    <span style={{ display: "block", fontSize: "0.87rem", fontWeight: 600 }}>
+                      {c.title}
+                    </span>
+                    <span style={{ display: "block", fontSize: "0.78rem", color: "var(--text-3)" }}>
+                      {c.detail}
+                    </span>
+                  </span>
                 </div>
-                <ul style={{ paddingLeft: "1rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                  {exp.points.map((pt) => (
-                    <li key={pt} style={{ fontSize: "0.82rem", color: "var(--text-2)", lineHeight: 1.65 }}>{pt}</li>
-                  ))}
-                </ul>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Right — timeline */}
+        <motion.ol variants={stagger} className="timeline" style={{ listStyle: "none", display: "grid", gap: "2.25rem" }}>
+          {roles.map((role) => (
+            <motion.li key={role.org} variants={fadeUp} style={{ position: "relative" }}>
+              <span className="timeline-node" data-current={role.current ? "true" : "false"} aria-hidden />
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  gap: "1rem",
+                  flexWrap: "wrap",
+                  marginBottom: "0.15rem",
+                }}
+              >
+                <h3 className="display" style={{ fontSize: "1.05rem", fontWeight: 600 }}>
+                  {role.org}
+                </h3>
+                <span
+                  className="mono"
+                  style={{ fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--text-3)", whiteSpace: "nowrap" }}
+                >
+                  {role.period}
+                </span>
               </div>
-            ))}
 
-          </motion.div> 
-
-          {/* ================= ฝั่งขวา: STATS & TA ================= */}
-          <motion.div variants={stagger} initial="hidden" animate={inView ? "show" : "hidden"}
-            style={{ display: "flex", flexDirection: "column", gap: "0" }}
-          >
-    
-      
-            <motion.div variants={fadeUp} style={{ marginTop: "3.5rem" }}>
-              <p style={{ fontSize: "0.72rem", color: "var(--text-3)", letterSpacing: "0.1em", marginBottom: "1.5rem" }}>
-                TNI · TEACHING ASSISTANT · 2024 – 2025
+              <p
+                style={{
+                  fontSize: "0.86rem",
+                  color: role.current ? "var(--accent)" : "var(--text-2)",
+                  fontWeight: 500,
+                  marginBottom: "0.9rem",
+                }}
+              >
+                {role.title} · <span style={{ color: "var(--text-3)" }}>{role.place}</span>
               </p>
 
-              {taExperiences.map((exp, i) => (
-                <div key={exp.title} style={{
-                  paddingBottom: "1.25rem",
-                  marginBottom: "1.25rem",
-                  borderBottom: i < taExperiences.length - 1 ? "1px solid var(--border)" : "none",
-                }}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.1rem", marginBottom: "0.4rem" }}>
-                    <p style={{ fontSize: "0.85rem", fontWeight: 700, letterSpacing: "-0.01em", lineHeight: 1.3 }}>{exp.title}</p>
-                    <p style={{ fontSize: "0.68rem", color: "var(--text-3)", letterSpacing: "0.06em" }}>{exp.role.toUpperCase()}</p>
-                  </div>
-                  <ul style={{ paddingLeft: "1rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                    {exp.points.map((pt) => (
-                      <li key={pt} style={{ fontSize: "0.8rem", color: "var(--text-2)", lineHeight: 1.6 }}>{pt}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </motion.div>
+              <ul className="bullets" style={{ marginBottom: "1rem" }}>
+                {role.points.map((pt) => (
+                  <li key={pt}>{pt}</li>
+                ))}
+              </ul>
 
-          </motion.div>
-        </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                {role.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="mono"
+                    style={{
+                      fontSize: "0.66rem",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      color: "var(--text-3)",
+                      border: "1px solid var(--border)",
+                      borderRadius: 999,
+                      padding: "0.25rem 0.6rem",
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </motion.li>
+          ))}
+        </motion.ol>
       </motion.div>
     </section>
   );

@@ -1,31 +1,52 @@
 "use client";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
 
-const projects = [
+import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { ArrowUpRight, X } from "lucide-react";
+import { SiGithub } from "react-icons/si";
+
+type Project = {
+  title: string;
+  year: string;
+  category: "Product" | "Design" | "AI" | "Creative";
+  stack: string[];
+  desc: string;
+  image: string | null;
+  video?: string | null;
+  github?: string | null;
+  live?: string | null;
+  liveLabel?: string;
+  details: string;
+  gallery?: { src: string; caption: string }[];
+};
+
+const projects: Project[] = [
   {
     title: "Hybrid Application: RateXChange",
     year: "2025",
-    stack: "UX/UI Design · Figma · Financial App",
+    category: "Design",
+    stack: ["UX/UI Design", "Figma", "Financial App"],
     desc: "การออกแบบแอปพลิเคชัน Hybrid สำหรับการแลกเปลี่ยนเงินตรา (RateXChange) เน้นการสร้างระบบที่ใช้งานง่าย แม่นยำ และตอบโจทย์ผู้ใช้งานยุคดิจิทัล",
-    image: "/images/rate.png", 
+    image: "/images/rate.png",
     video: null,
     github: "https://github.com/Emperor13/ReactNativeFinalProject",
     live: "https://www.figma.com/design/GRqPT8humEXzlv1b3nhVel/RateXChange--Copy-?node-id=0-1&t=o0pwbXSgI09TPdkn-1",
-    details: `โปรเจกต์ออกแบบแอปพลิเคชัน Hybrid สำหรับแพลตฟอร์ม RateXChange 
+    liveLabel: "Figma",
+    details: `โปรเจกต์ออกแบบแอปพลิเคชัน Hybrid สำหรับแพลตฟอร์ม RateXChange
 
 • UI/UX Design: ออกแบบหน้าจอ Interface ที่มีความเป็นโมเดิร์น สบายตา และจัดวางตำแหน่งข้อมูลทางการเงินให้เข้าใจง่ายที่สุด
 • Design System: กำหนด Component และ Style Guide บน Figma เพื่อความสม่ำเสมอของดีไซน์ในทุกๆ หน้าจอ
 • Prototype Development: สร้าง Flow การจำลองการใช้งาน (Interaction) เพื่อให้เห็นภาพการทำงานจริงของระบบได้อย่างสมบูรณ์`,
   },
   {
-    title: "Software Developer (Internship)",
-    year: "2025",
-    stack: "Power Platform · SQL Server · D365 API",
+    title: "Software Developer (Internship) @ A-HOST",
+    year: "2026",
+    category: "Product",
+    stack: ["Power Platform", "SQL Server", "D365 API", "QA"],
     desc: "ฝึกงานตำแหน่ง Software Developer ดูแลการพัฒนาโปรเจกต์ Petty Cash App, ระบบ Asset Audit และทำหน้าที่เป็น QA (Tester) ตรวจสอบระบบแบบ Full Loop",
     image: "/images/intern.jpg",
     video: null,
-
     details: `ประสบการณ์ฝึกงานพัฒนาซอฟต์แวร์และระบบองค์กร ประกอบด้วย 3 โปรเจกต์หลัก:
 
 • Project 1: Petty Cash Application
@@ -44,9 +65,76 @@ const projects = [
 - Technical Writing: จัดทำและแก้ไข User Manual เพื่อความเข้าใจของผู้ใช้งาน`,
   },
   {
+    title: "iExpense — Money Flow",
+    year: "2026",
+    category: "Product",
+    stack: ["Vue 3", "TypeScript", "Vite", "Supabase", "Capacitor", "Vibe coded"],
+    desc: "แอปบันทึกรายรับรายจ่ายภาษาไทย ล็อกอินผ่าน Supabase Auth มีกราฟวิเคราะห์รายจ่าย โหมด Demo ให้ลองใช้ทันที และ build เป็น APK Android ผ่าน GitHub Actions",
+    image: "/images/iexpense/Main.png",
+    video: null,
+    github: null,
+    live: "https://iexpense-swart.vercel.app/",
+    liveLabel: "Live app",
+    gallery: [
+      { src: "/images/iexpense/Main.png", caption: "หน้าหลัก — การ์ดสรุปยอดและรายการธุรกรรม" },
+      { src: "/images/iexpense/overall.png", caption: "ภาพรวม — กราฟรายรับรายจ่ายและหมวดหมู่" },
+      { src: "/images/iexpense/bubble.png", caption: "ฟองเงิน — ขนาดฟองตามจำนวนครั้งที่จ่ายซ้ำ" },
+      { src: "/images/iexpense/auth.png", caption: "หน้าเข้าสู่ระบบ พร้อมปุ่มเข้าโหมด Demo" },
+    ],
+    details: `แอปบันทึกรายรับรายจ่ายภาษาไทย (Money Flow) พัฒนาแบบ Vibe Coding ด้วย Vue 3 + TypeScript + Vite และใช้ Supabase เป็นฐานข้อมูลและระบบยืนยันตัวตน
+
+• Auth & Access: ล็อกอินด้วยอีเมล + รหัสผ่าน ปิดการสมัครสมาชิกเอง (ผู้ดูแลสร้างบัญชีให้) พร้อมฟีเจอร์ลืมรหัสผ่านและหน้าตั้งรหัสใหม่จากลิงก์ในอีเมล
+• Data Layer: ตาราง transactions ผูกกับ auth.users เปิด Row Level Security ให้แต่ละคนเห็นเฉพาะข้อมูลของตัวเอง พร้อม index สำหรับ query ตามผู้ใช้และตามวันที่
+• Visualization: การ์ดสรุปยอด, กราฟแท่งรายรับ-รายจ่าย 6 เดือน, โดนัทแยกหมวดหมู่ที่กดดูรายการในแต่ละสัดส่วนได้ และแท็บ "ฟองเงิน" ที่ขนาดฟองสัมพันธ์กับจำนวนครั้งที่จ่ายซ้ำ
+• Insight: วิเคราะห์รายจ่ายรายเดือนเทียบกับเดือนก่อน และ Money Buddy ช่วยคาดการณ์เงินคงเหลือ
+• Demo Mode: เข้าดูแอปได้โดยไม่ต้องมีบัญชี ใช้ข้อมูลตัวอย่างย้อนหลัง 6 เดือนในหน่วยความจำ ไม่เรียก Supabase และปิดการเพิ่ม/แก้ไข/ลบทั้งหมด
+• Mobile Build: ห่อด้วย Capacitor แล้ว build debug APK บน GitHub Actions (JDK 21 + Android SDK 36) จึงไม่ต้องติดตั้ง Android Studio หรือ Android SDK ในเครื่อง
+• Deploy: static SPA บน Vercel ฝังค่า env ตอน build โดยใช้ anon public key เท่านั้นเพื่อความปลอดภัย`,
+  },
+  {
+    title: "SignShop POS — ระบบหลังบ้านร้านป้าย (SME-Management)",
+    year: "2026",
+    category: "Product",
+    stack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "Tailwind 4", "Vibe coded"],
+    desc: "ระบบหลังบ้านสำหรับร้านป้าย/ร้านพิมพ์ SME ใช้งานโดยเจ้าของร้านคนเดียว ครอบคลุมตั้งแต่รับงานหน้าร้าน ติดตามสถานะงาน ไปจนถึงออกเอกสารบิล A4 แทนการใช้ SMEMOVE",
+    image: "/images/POS/POS.png",
+    video: null,
+    github: null,
+    live: null,
+    gallery: [
+      { src: "/images/POS/POS.png", caption: "หน้า POS — เลือกลูกค้า สินค้า และคิดราคาตามสูตรของแต่ละแบบ" },
+      { src: "/images/POS/dashboard.png", caption: "Dashboard — ภาพรวมยอดขายและงานที่ต้องติดตาม" },
+      { src: "/images/POS/Board.png", caption: "สถานะงาน — Kanban 5 คอลัมน์ ลากย้ายงานได้" },
+    ],
+    details: `ระบบหลังบ้านร้านป้าย/ร้านพิมพ์ SME (ชื่อร้านในข้อมูล seed คือ "ป้าย@ก็รัก") ออกแบบสำหรับผู้ใช้คนเดียวแบบ single admin เพื่อแทนการใช้ SMEMOVE ตั้งแต่รับงานหน้าร้าน → ติดตามสถานะงาน → ออกเอกสารบิลแบบพิมพ์ A4
+
+• Tech Stack: Next.js 15 (App Router) + React 19 + TypeScript 5.9, Tailwind 4 + shadcn/ui (base-ui), Supabase (Postgres + Auth) ผ่าน @supabase/ssr, react-hook-form + zod, react-big-calendar, @dnd-kit, motion, sonner — คุม auth ด้วย middleware.ts เรียก updateSession ทุก route ที่ไม่ใช่ static
+
+• โครงหน้าจอ (Route Groups):
+- (auth)/login — ล็อกอินด้วย Supabase Auth
+- (dashboard) — 10 เมนู: Dashboard, ภาพรวมวันนี้, POS, สถานะงาน (Kanban 5 คอลัมน์ drag & drop), ปฏิทิน deadline, ลูกค้า, ยอดขาย, ใบเสนอราคา, เอกสาร, ตั้งค่า
+- (print)/documents/[id] — หน้าพิมพ์ A4 ล้วน ไม่มี sidebar/header ใช้ window.print() + ฟอนต์ Sarabun
+
+• POS & Pricing: เลือกลูกค้า (ขาจร/ประจำ) แล้วเลือกสินค้า 7 แบบ (ไวนิล, สติกเกอร์ A3, PP A3 โปร 10 แถม 10, นามบัตร, สติกเกอร์ custom, ถ่ายเอกสาร, อื่นๆ) แต่ละแบบมีฟอร์ม specs และสูตรราคาของตัวเอง ปรับราคาด้วย pricing_options (price_factor + fee) ที่แก้ได้จากหน้าตั้งค่า และบันทึกผ่าน RPC create_order_with_jobs แบบ atomic (สร้าง order + order_items + jobs ทีเดียว 1 job ต่อ 1 รายการ)
+
+• Payment & VAT: รองรับการชำระ 3 แบบ (จ่ายเต็ม / มัดจำ / ยังไม่ชำระ) เก็บ paid_amount และเก็บยอดคงเหลือตอนรับงานผ่าน RPC settle_order_balance · VAT 3 โหมดต่อบิล (ไม่มี / รวมใน / แยกนอก) พร้อม snapshot อัตราไว้ในออเดอร์ เพื่อให้พิมพ์เอกสารย้อนหลังได้ตัวเลขเดิม
+
+• Documents: 4 ประเภท — QT ใบเสนอราคา, IN ใบวางบิล/ใบส่งของ, DO ใบส่งของ (retired รวมเข้า IN), BI ใบเสร็จ · เลขที่รันในฐานข้อมูลผ่าน RPC next_document_number แบบล็อกแถว ({PREFIX}-{9 หลัก}) ไม่คำนวณฝั่ง browser ออกเอกสารด้วย issue_document แล้วพิมพ์ซ้ำได้เลขเดิมเสมอ · เขียนตัวแบ่งหน้าเองใน documents.ts โดยคำนวณจากงบมิลลิเมตรของ A4 เพื่อกันยอดรวมถูกตัดกลางหน้า และ baht-text.ts แปลงจำนวนเงินเป็นตัวอักษรไทย
+
+• Quotation Flow: สร้าง QT ก่อนมีการขาย (เก็บแยกจาก orders) → กด "เปิดใน POS" เพื่อโยนรายการเข้าตะกร้า → ปิดการขายตามปกติ → ผูก converted_order_id (unique = แปลงได้ครั้งเดียว) และตั้งสถานะ accepted
+
+• Notifications: derive สดจาก orders/jobs/quotations ไม่เก็บเป็น table เก็บเฉพาะการกดปิดใน notification_dismissals
+
+[ สถานะโปรเจกต์ ]
+• Migration 001–018 อยู่ใน supabase/migrations/ · ตาม tasks.md: Phase 0–6 เสร็จแล้ว
+• Phase 7 (ใบเสนอราคา) ทำถึงหน้า list + หน้าสร้าง ส่วนหน้า [id] สำหรับแก้/พิมพ์/เปิดใน POS ยังค้าง
+• Phase 8 (ตรวจงาน, รัน migration บน Supabase, ทดสอบ end-to-end, ทดสอบพิมพ์จริง) ยังไม่ได้ทำ — จำนวนแถวต่อหน้าของตัวแบ่งหน้าเอกสารยังเป็นค่าประมาณที่ยังไม่เคยเทียบกับกระดาษจริง`,
+  },
+  {
     title: "AI for Smart Life: Insect Bite Detection",
     year: "2024",
-    stack: "Python · Streamlit · Image Classification · Kaggle",
+    category: "AI",
+    stack: ["Python", "Streamlit", "Image Classification", "Kaggle"],
     desc: "Hackathon Project — พัฒนา AI ตรวจจับรอยแผลจากแมลงกัดต่อย เพื่อลดภาระค่ารักษาพยาบาลและประเมินอาการเบื้องต้นแก่นักท่องเที่ยว",
     image: "/images/bitebye.jpg",
     video: "/videos/Bitebye Demo.mp4",
@@ -59,14 +147,13 @@ const projects = [
 • Deployment: สร้าง Web Application ด้วย Streamlit เพื่อให้ผู้ใช้งานสามารถอัปโหลดภาพและรับผลวิเคราะห์ได้ทันที`,
   },
   {
-    title: "TNI - SIT Global Project-based Learning (gPBL)",
+    title: "TNI – SIT Global Project-based Learning (gPBL)",
     year: "2024",
-    stack: "Unity · VR Development · C# · International Collaboration",
+    category: "Product",
+    stack: ["Unity", "VR", "C#", "International Team"],
     desc: "โครงการแลกเปลี่ยนเรียนรู้เชิงปฏิบัติการระดับนานาชาติ ร่วมกับ Shibaura Institute of Technology (SIT) ประเทศญี่ปุ่น เพื่อพัฒนาโปรเจกต์เกม Virtual Reality (VR)",
     image: "/images/gpbl.jpg",
-    video: "/videos/ghostvr.mp4", 
-  
-
+    video: "/videos/ghostvr.mp4",
     details: `โปรเจกต์พัฒนาสื่อเสมือนจริงและการทำงานร่วมกับทีมต่างชาติ (สถาบันเทคโนโลยีชิบาอุระ ประเทศญี่ปุ่น)
 
 • VR Development: ร่วมกันออกแบบและพัฒนาเกม VR ด้วย Unity โดยเน้นการสร้าง Interactive Experience ที่น่าตื่นเต้น
@@ -76,12 +163,14 @@ const projects = [
   {
     title: "Inclusive Design: App for Hearing Impaired",
     year: "2024",
-    stack: "UX Research · Design System · Pixel Perfect · Figma",
+    category: "Design",
+    stack: ["UX Research", "Design System", "Pixel Perfect", "Figma"],
     desc: "การออกแบบแอปพลิเคชันเพื่อส่งเสริมคุณภาพชีวิตของผู้พิการทางการได้ยิน โดยเน้นกระบวนการทำ User Research และการออกแบบที่ตอบโจทย์ความต้องการที่แท้จริง",
     image: "/images/CCynC.jpg",
     video: null,
     github: null,
     live: "https://www.figma.com/design/vhDmEIquvKlmrN6EPdDcHO/UX-UI--Copy-?node-id=0-1&p=f",
+    liveLabel: "Prototype",
     details: `โปรเจกต์จบ (Final Project) ออกแบบนวัตกรรมดิจิทัลตามหลัก Inclusive Design เพื่อส่งเสริมคุณภาพชีวิตของผู้พิการทางการได้ยิน
 
 • User Interview: ร่วมสัมภาษณ์และเก็บข้อมูลจากผู้เชี่ยวชาญ (ศิษย์เก่า) ที่ทำงานใกล้ชิดกับผู้พิการทางการได้ยิน เพื่อหา Insight ที่แท้จริง
@@ -93,10 +182,12 @@ const projects = [
 • Social Barrier: มีความกังวลในการใช้ชีวิตในสังคมทั่วไป และมักจะเลือกสื่อสารภายในกลุ่มคนที่มีลักษณะเดียวกัน
 • App Usage: ใช้งานแอปทั่วไปได้ปกติ แต่จะมีปัญหาอย่างมากกับแอปกลุ่มมัลติมีเดีย (เช่น YouTube) ที่ไม่มีฟีเจอร์รองรับการเข้าถึงข้อมูลที่ชัดเจน`,
   },
-  {    title: "TCG บ้านบ้าน – เช็คราคา หาเด็ค การ์ดโปเกม่อน",
+  {
+    title: "TCG บ้านบ้าน – เช็คราคา หาเด็ค การ์ดโปเกม่อน",
     year: "2025",
-    stack: "Laravel · PHP · SQL · Bootstrap",
-    desc: "แพลตฟอร์มศูนย์กลางสำหรับผู้เล่นการ์ดโปเกม่อนในไทย ช่วยแก้ปัญหาเรื่องการเช็คราคาการ์ดที่ผันผวน ",
+    category: "Product",
+    stack: ["Laravel", "PHP", "SQL", "Bootstrap"],
+    desc: "แพลตฟอร์มศูนย์กลางสำหรับผู้เล่นการ์ดโปเกม่อนในไทย ช่วยแก้ปัญหาเรื่องการเช็คราคาการ์ดที่ผันผวน",
     image: "/images/mb1.png",
     video: "/videos/tcgbanban1.mp4",
     github: "https://github.com/Pongpaii/Banban-TCG",
@@ -108,10 +199,10 @@ const projects = [
 • Inventory Management: วางโครงสร้างหลังบ้านในการจัดการสต็อกการ์ดและข้อมูลรายละเอียดการ์ดแต่ละใบ`,
   },
   {
-
     title: "Content Creator & Animator | Poip Animation",
     year: "2024",
-    stack: "2D Animation · Content Strategy · Data Analysis",
+    category: "Creative",
+    stack: ["2D Animation", "Content Strategy", "Data Analysis"],
     desc: "ดูแลการผลิตคอนเทนต์แอนิเมชันแบบครบวงจร บน YouTube & TikTok จนมียอดผู้ติดตามมากกว่า 40,000+ Followers",
     image: "/images/content.jpg",
     video: null,
@@ -126,265 +217,425 @@ const projects = [
   },
 ];
 
-function ProjectCard({ p, i, inView, onOpenDetails }: any) {
-  const [hovered, setHovered] = useState(false);
-  
-  // เช็คเงื่อนไขชื่อโปรเจกต์ เพื่อเปลี่ยนข้อความบนปุ่ม
-  const isHearingApp = p.title.includes("Hearing");
-  const isHybridApp = p.title.includes("Hybrid");
+const filters = ["All", "Product", "Design", "AI", "Creative"] as const;
 
-  // เลือกข้อความแสดงผลบนปุ่มตามเงื่อนไข
-  let liveButtonText = "LIVE ↗";
-  if (isHybridApp) {
-    liveButtonText = "FIGMA ↗";
-  } else if (isHearingApp) {
-    liveButtonText = "PROTOTYPE ↗";
-  }
-
+function ProjectCard({
+  p,
+  index,
+  inView,
+  onOpen,
+}: {
+  p: Project;
+  index: number;
+  inView: boolean;
+  onOpen: () => void;
+}) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 28 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      style={{
-        border: `1px solid ${hovered ? "#000000" : "#e5e5e5"}`,
-        borderRadius: "4px",
-        overflow: "hidden",
-        transition: "border-color 0.25s",
-        display: "flex",
-        flexDirection: "column",
-        background: "#ffffff",
-      }}
+      transition={{ duration: 0.65, delay: Math.min(index * 0.06, 0.4), ease: [0.16, 1, 0.3, 1] }}
+      className="card"
     >
-      {/* Cover Image */}
-      <div 
-        onClick={onOpenDetails}
+      <button
+        type="button"
+        onClick={onOpen}
+        className="card-media"
+        aria-label={`Open details for ${p.title}`}
         style={{
-          height: "180px",
-          background: hovered ? "#f5f5f5" : "#fafafa",
-          transition: "background 0.3s",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderBottom: "1px solid #e5e5e5",
-          cursor: "pointer"
+          border: 0,
+          padding: 0,
+          cursor: "pointer",
+          display: "block",
+          width: "100%",
+          background: p.image
+            ? undefined
+            : "radial-gradient(120% 120% at 15% 0%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%), var(--bg-2)",
         }}
       >
         {p.image ? (
-          <img src={p.image} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <Image
+            src={p.image}
+            alt={p.title}
+            fill
+            sizes="(max-width: 720px) 100vw, 380px"
+            style={{ objectFit: "cover" }}
+          />
         ) : (
-          <div style={{ padding: "0 1.5rem", textAlign: "center" }}>
-            <span style={{ fontSize: "0.75rem", color: "#737373", letterSpacing: "0.1em", fontWeight: 600 }}>
-              {p.title.toUpperCase()}
-            </span>
-          </div>
+          <span
+            className="display"
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "grid",
+              placeItems: "center",
+              padding: "1rem",
+              textAlign: "center",
+              fontSize: "1.1rem",
+              color: "var(--text-2)",
+            }}
+          >
+            {p.title}
+          </span>
         )}
-      </div>
+        {p.video && (
+          <span
+            className="mono"
+            style={{
+              position: "absolute",
+              top: "0.7rem",
+              left: "0.7rem",
+              zIndex: 2,
+              fontSize: "0.6rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              padding: "0.25rem 0.5rem",
+              borderRadius: 999,
+              background: "rgba(0,0,0,0.55)",
+              color: "#fff",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            ▶ Demo
+          </span>
+        )}
+      </button>
 
-      {/* Card Contents */}
-      <div style={{ padding: "1.25rem 1.5rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-          <h3 
-            onClick={onOpenDetails}
-            style={{ fontSize: "0.95rem", fontWeight: 700, letterSpacing: "-0.02em", cursor: "pointer", color: "#171717", lineHeight: 1.3 }}
-            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+      <div style={{ padding: "1.15rem 1.25rem 1.25rem", display: "flex", flexDirection: "column", gap: "0.6rem", flex: 1 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "0.75rem" }}>
+          <h3
+            onClick={onOpen}
+            style={{
+              fontSize: "0.97rem",
+              fontWeight: 600,
+              letterSpacing: "-0.015em",
+              lineHeight: 1.35,
+              cursor: "pointer",
+            }}
           >
             {p.title}
           </h3>
-          <span style={{ fontSize: "0.72rem", color: "#737373", marginLeft: "0.5rem" }}>{p.year}</span>
+          <span className="mono" style={{ fontSize: "0.68rem", color: "var(--text-3)" }}>
+            {p.year}
+          </span>
         </div>
-        <p style={{ fontSize: "0.72rem", color: "#737373", letterSpacing: "0.04em" }}>{p.stack}</p>
-        <p style={{ fontSize: "0.82rem", color: "#404040", lineHeight: 1.6, flex: 1 }}>{p.desc}</p>
 
-        <button
-          onClick={onOpenDetails}
-          style={{
-            alignSelf: "flex-start",
-            background: "none",
-            border: "none",
-            color: "#171717",
-            fontSize: "0.75rem",
-            fontWeight: 600,
-            cursor: "pointer",
-            padding: "4px 0",
-            textDecoration: "underline",
-            marginBottom: "0.5rem",
-            opacity: 0.8
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.8")}
-        >
-          READ DETAILS →
-        </button>
-
-        <div style={{ display: "flex", gap: "0.5rem", marginTop: "auto" }}>
-          {p.github && (
-            <a href={p.github} target="_blank" rel="noreferrer" style={{
-              flex: 1, padding: "8px 0", textAlign: "center",
-              border: "1px solid #e5e5e5", borderRadius: "2px",
-              fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.08em",
-              color: "#171717", transition: "all 0.2s", textDecoration: "none"
-            }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "#171717";
-                (e.currentTarget as HTMLElement).style.color = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "transparent";
-                (e.currentTarget as HTMLElement).style.color = "#171717";
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
+          {p.stack.slice(0, 3).map((t) => (
+            <span
+              key={t}
+              className="mono"
+              style={{
+                fontSize: "0.62rem",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+                color: "var(--text-3)",
+                border: "1px solid var(--border)",
+                borderRadius: 999,
+                padding: "0.2rem 0.5rem",
               }}
             >
-              CODE ↗
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <p style={{ fontSize: "0.84rem", color: "var(--text-2)", lineHeight: 1.7, flex: 1 }}>{p.desc}</p>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.25rem" }}>
+          <button type="button" onClick={onOpen} className="link-arrow" style={{ background: "none", border: 0, cursor: "pointer" }}>
+            Read details <ArrowUpRight size={14} />
+          </button>
+          {p.github && (
+            <a href={p.github} target="_blank" rel="noreferrer" className="link-arrow" aria-label={`${p.title} source code`}>
+              <SiGithub size={14} /> Code
             </a>
           )}
-          {p.live ? (
-            <a href={p.live} target="_blank" rel="noreferrer" style={{
-              flex: 1, padding: "8px 0", textAlign: "center",
-              background: (isHearingApp || isHybridApp) ? "#0F6E56" : "#171717",
-              borderRadius: "2px", fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.08em",
-              color: "#ffffff", transition: "opacity 0.2s", textDecoration: "none"
-            }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.85")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
-            >
-              {liveButtonText}
+          {p.live && (
+            <a href={p.live} target="_blank" rel="noreferrer" className="link-arrow" style={{ color: "var(--accent)" }}>
+              {p.liveLabel ?? "Live"} <ArrowUpRight size={14} />
             </a>
-          ) : (
-            p.github && (
-              <span style={{
-                flex: 1, padding: "8px 0", textAlign: "center",
-                border: "1px solid #e5e5e5", borderRadius: "2px",
-                fontSize: "0.72rem", letterSpacing: "0.08em", color: "#a3a3a3",
-              }}>
-                NO LIVE
-              </span>
-            )
           )}
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
 export default function Projects() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
+  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
+  const [selected, setSelected] = useState<Project | null>(null);
+
+  const visible = useMemo(
+    () => (filter === "All" ? projects : projects.filter((p) => p.category === filter)),
+    [filter],
+  );
 
   useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => { document.body.style.overflow = "unset"; };
-  }, [selectedProject]);
+    if (!selected) return;
+    document.body.classList.add("no-scroll");
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelected(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.classList.remove("no-scroll");
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [selected]);
 
   return (
-    <section id="projects" ref={ref} style={{ padding: "7rem 2.5rem", borderBottom: "1px solid #e5e5e5", background: "#fafafa" }}>
-      <div style={{ maxWidth: "940px", margin: "0 auto" }}>
-        <motion.p
-          initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          style={{ fontSize: "0.72rem", color: "#737373", letterSpacing: "0.14em", marginBottom: "3rem", fontWeight: 600 }}
+    <section id="projects" ref={ref} className="section" style={{ background: "var(--bg-2)" }}>
+      <div className="shell">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            gap: "1.5rem",
+            flexWrap: "wrap",
+            marginBottom: "2.75rem",
+          }}
         >
-          PROJECTS
-        </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p className="eyebrow" style={{ marginBottom: "1.1rem" }}>
+              Selected work
+            </p>
+            <h2 className="section-title">Things I&apos;ve designed, built and shipped</h2>
+          </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
-          {projects.map((p, i) => (
-            <ProjectCard 
-              key={p.title} 
-              p={p} 
-              i={i} 
-              inView={inView} 
-              onOpenDetails={() => setSelectedProject(p)} 
-            />
-          ))}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.2 }}
+            style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}
+            role="group"
+            aria-label="Filter projects by category"
+          >
+            {filters.map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setFilter(f)}
+                aria-pressed={filter === f}
+                className="chip"
+                style={{
+                  cursor: "pointer",
+                  color: filter === f ? "var(--accent-contrast)" : "var(--text-2)",
+                  background: filter === f ? "var(--text)" : "var(--surface)",
+                  borderColor: filter === f ? "var(--text)" : "var(--border)",
+                }}
+              >
+                {f}
+              </button>
+            ))}
+          </motion.div>
         </div>
+
+        <motion.div layout className="grid-auto">
+          <AnimatePresence mode="popLayout">
+            {visible.map((p, i) => (
+              <ProjectCard key={p.title} p={p} index={i} inView={inView} onOpen={() => setSelected(p)} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
-      {/* POPUP DETAIL OVERLAY */}
       <AnimatePresence>
-        {selectedProject && (
+        {selected && (
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setSelectedProject(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setSelected(null)}
             style={{
-              position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-              background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(8px)",
-              zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center",
-              padding: "1.5rem"
+              position: "fixed",
+              inset: 0,
+              zIndex: 130,
+              display: "grid",
+              placeItems: "center",
+              padding: "1.25rem",
+              background: "color-mix(in srgb, var(--bg) 78%, transparent)",
+              backdropFilter: "blur(14px)",
+              WebkitBackdropFilter: "blur(14px)",
             }}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.97, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.97, y: 15 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label={selected.title}
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
+              className="glass"
               style={{
-                background: "#ffffff", border: "1px solid #e5e5e5", borderRadius: "6px", 
-                maxWidth: "750px", width: "100%", maxHeight: "85vh", overflowY: "auto", position: "relative",
-                boxShadow: "0 30px 60px rgba(0,0,0,0.06)"
+                width: "100%",
+                maxWidth: 780,
+                maxHeight: "88vh",
+                overflowY: "auto",
+                borderRadius: 20,
+                background: "var(--bg)",
+                boxShadow: "var(--shadow-lg)",
+                position: "relative",
               }}
             >
-              {/* ปุ่มปิด ✕ */}
-              <button 
-                onClick={() => setSelectedProject(null)}
-                style={{
-                  position: "absolute", top: "1.5rem", right: "1.5rem",
-                  background: "none", border: "none", color: "#a3a3a3",
-                  fontSize: "1.2rem", cursor: "pointer", zIndex: 10
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#171717")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "#a3a3a3")}
+              <button
+                type="button"
+                onClick={() => setSelected(null)}
+                className="icon-btn"
+                aria-label="Close details"
+                style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 3, background: "var(--bg)" }}
               >
-                ✕
+                <X size={16} />
               </button>
 
-              {/* 🎥 ส่วนแสดงผลมัลติมีเดีย (วิดีโอ หรือ รูปภาพ) ต้นกล่องพ็อพัพ */}
-              {selectedProject.video ? (
-                <div style={{ width: "100%", background: "#000", borderBottom: "1px solid #e5e5e5", display: "flex" }}>
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    style={{ width: "100%", height: "auto", maxHeight: "400px", objectFit: "contain" }}
-                  >
-                    <source src={selectedProject.video} type="video/mp4" />
-                  </video>
-                </div>
+              {selected.video ? (
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  style={{
+                    width: "100%",
+                    maxHeight: 420,
+                    objectFit: "contain",
+                    background: "#000",
+                    borderBottom: "1px solid var(--border)",
+                  }}
+                >
+                  <source src={selected.video} type="video/mp4" />
+                </video>
               ) : (
-                selectedProject.image && (
-                  <div style={{ width: "100%", height: "320px", overflow: "hidden", borderBottom: "1px solid #e5e5e5" }}>
-                    <img src={selectedProject.image} alt={selectedProject.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                selected.image && (
+                  <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", borderBottom: "1px solid var(--border)" }}>
+                    <Image
+                      src={selected.image}
+                      alt={selected.title}
+                      fill
+                      sizes="780px"
+                      style={{ objectFit: "cover" }}
+                    />
                   </div>
                 )
               )}
 
-              {/* เนื้อหาข้อความ */}
-              <div style={{ padding: "2.5rem 3rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: "1rem", marginBottom: "0.25rem" }}>
-                  <h2 style={{ fontSize: "1.4rem", fontWeight: 700, letterSpacing: "-0.02em", color: "#171717", lineHeight: 1.3 }}>
-                    {selectedProject.title}
+              <div style={{ padding: "clamp(1.5rem, 4vw, 2.5rem)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "baseline", flexWrap: "wrap" }}>
+                  <h2 className="display" style={{ fontSize: "clamp(1.25rem, 3vw, 1.6rem)" }}>
+                    {selected.title}
                   </h2>
-                  <span style={{ fontSize: "0.85rem", color: "#737373", fontWeight: 500 }}>{selectedProject.year}</span>
+                  <span className="mono" style={{ fontSize: "0.72rem", color: "var(--text-3)" }}>
+                    {selected.year}
+                  </span>
                 </div>
-                <p style={{ fontSize: "0.78rem", color: "#737373", letterSpacing: "0.04em", marginBottom: "1.75rem" }}>
-                  {selectedProject.stack}
-                </p>
-                
-                <div style={{ 
-                  fontSize: "0.95rem", color: "#404040", lineHeight: 1.8, 
-                  whiteSpace: "pre-line", borderTop: "1px solid #e5e5e5", paddingTop: "1.75rem" 
-                }}>
-                  {selectedProject.details}
+
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", margin: "1rem 0 1.5rem" }}>
+                  {selected.stack.map((t) => (
+                    <span key={t} className="chip" style={{ fontSize: "0.7rem" }}>
+                      {t}
+                    </span>
+                  ))}
                 </div>
+
+                <div
+                  style={{
+                    borderTop: "1px solid var(--border)",
+                    paddingTop: "1.5rem",
+                    whiteSpace: "pre-line",
+                    fontSize: "0.92rem",
+                    lineHeight: 1.85,
+                    color: "var(--text-2)",
+                  }}
+                >
+                  {selected.details}
+                </div>
+
+                {selected.gallery && selected.gallery.length > 0 && (
+                  <div style={{ marginTop: "2rem" }}>
+                    <p
+                      className="mono"
+                      style={{
+                        fontSize: "0.68rem",
+                        letterSpacing: "0.13em",
+                        textTransform: "uppercase",
+                        color: "var(--text-3)",
+                        marginBottom: "0.9rem",
+                      }}
+                    >
+                      Screens
+                    </p>
+                    <div
+                      style={{
+                        display: "grid",
+                        gap: "0.9rem",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
+                      }}
+                    >
+                      {selected.gallery.map((shot) => (
+                        <figure key={shot.src} style={{ margin: 0 }}>
+                          <a
+                            href={shot.src}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              position: "relative",
+                              display: "block",
+                              aspectRatio: "2 / 1",
+                              borderRadius: 12,
+                              overflow: "hidden",
+                              border: "1px solid var(--border)",
+                              background: "var(--bg-2)",
+                            }}
+                          >
+                            <Image
+                              src={shot.src}
+                              alt={shot.caption}
+                              fill
+                              sizes="(max-width: 720px) 100vw, 340px"
+                              style={{ objectFit: "cover" }}
+                            />
+                          </a>
+                          <figcaption
+                            style={{
+                              fontSize: "0.72rem",
+                              color: "var(--text-3)",
+                              lineHeight: 1.55,
+                              marginTop: "0.45rem",
+                            }}
+                          >
+                            {shot.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {(selected.github || selected.live) && (
+                  <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginTop: "1.75rem" }}>
+                    {selected.github && (
+                      <a href={selected.github} target="_blank" rel="noreferrer" className="btn btn-sm">
+                        <SiGithub size={14} /> View code <ArrowUpRight size={13} />
+                      </a>
+                    )}
+                    {selected.live && (
+                      <a href={selected.live} target="_blank" rel="noreferrer" className="btn btn-primary btn-sm">
+                        {selected.liveLabel ?? "Live"} <ArrowUpRight size={13} />
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
