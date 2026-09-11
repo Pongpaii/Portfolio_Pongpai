@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
 type Project = {
@@ -368,6 +368,24 @@ export default function Projects() {
   const inView = useInView(ref, { once: true, margin: "-120px" });
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
   const [selected, setSelected] = useState<Project | null>(null);
+  // Index of the gallery image shown in the in-page lightbox, or null when closed.
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  const gallery = selected?.gallery ?? [];
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+  const closeModal = useCallback(() => {
+    setLightbox(null);
+    setSelected(null);
+  }, []);
+  const nextShot = useCallback(
+    () => setLightbox((i) => (i === null ? i : (i + 1) % gallery.length)),
+    [gallery.length],
+  );
+  const prevShot = useCallback(
+    () => setLightbox((i) => (i === null ? i : (i - 1 + gallery.length) % gallery.length)),
+    [gallery.length],
+  );
 
   const visible = useMemo(
     () => (filter === "All" ? projects : projects.filter((p) => p.category === filter)),
@@ -378,14 +396,22 @@ export default function Projects() {
     if (!selected) return;
     document.body.classList.add("no-scroll");
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelected(null);
+      if (e.key === "Escape") {
+        // Escape closes the lightbox first, then the modal.
+        if (lightbox !== null) setLightbox(null);
+        else setSelected(null);
+      }
+      if (lightbox !== null) {
+        if (e.key === "ArrowRight") nextShot();
+        if (e.key === "ArrowLeft") prevShot();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.classList.remove("no-scroll");
       window.removeEventListener("keydown", onKey);
     };
-  }, [selected]);
+  }, [selected, lightbox, nextShot, prevShot]);
 
   return (
     <section id="projects" ref={ref} className="section" style={{ background: "var(--bg-2)" }}>
@@ -455,7 +481,7 @@ export default function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            onClick={() => setSelected(null)}
+            onClick={closeModal}
             style={{
               position: "fixed",
               inset: 0,
@@ -491,7 +517,7 @@ export default function Projects() {
             >
               <button
                 type="button"
-                onClick={() => setSelected(null)}
+                onClick={closeModal}
                 className="icon-btn"
                 aria-label="Close details"
                 style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 3, background: "var(--bg)" }}
@@ -582,20 +608,23 @@ export default function Projects() {
                         gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))",
                       }}
                     >
-                      {selected.gallery.map((shot) => (
+                      {selected.gallery.map((shot, gi) => (
                         <figure key={shot.src} style={{ margin: 0 }}>
-                          <a
-                            href={shot.src}
-                            target="_blank"
-                            rel="noreferrer"
+                          <button
+                            type="button"
+                            onClick={() => setLightbox(gi)}
+                            aria-label={`Zoom: ${shot.caption}`}
                             style={{
                               position: "relative",
                               display: "block",
+                              width: "100%",
                               aspectRatio: "2 / 1",
                               borderRadius: 12,
                               overflow: "hidden",
                               border: "1px solid var(--border)",
                               background: "var(--bg-2)",
+                              cursor: "zoom-in",
+                              padding: 0,
                             }}
                           >
                             <Image
@@ -605,7 +634,7 @@ export default function Projects() {
                               sizes="(max-width: 720px) 100vw, 340px"
                               style={{ objectFit: "cover" }}
                             />
-                          </a>
+                          </button>
                           <figcaption
                             style={{
                               fontSize: "0.72rem",
@@ -638,6 +667,122 @@ export default function Projects() {
                 )}
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* In-page lightbox — zoom gallery images without leaving the page */}
+      <AnimatePresence>
+        {selected && lightbox !== null && gallery[lightbox] && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={closeLightbox}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 160,
+              display: "grid",
+              placeItems: "center",
+              padding: "clamp(1rem, 4vw, 3rem)",
+              background: "color-mix(in srgb, #000 82%, transparent)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={closeLightbox}
+              className="icon-btn"
+              aria-label="Close image"
+              style={{ position: "absolute", top: "1.25rem", right: "1.25rem", zIndex: 3 }}
+            >
+              <X size={16} />
+            </button>
+
+            {gallery.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevShot();
+                  }}
+                  className="icon-btn"
+                  aria-label="Previous image"
+                  style={{ position: "absolute", left: "1.25rem", top: "50%", transform: "translateY(-50%)", zIndex: 3 }}
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextShot();
+                  }}
+                  className="icon-btn"
+                  aria-label="Next image"
+                  style={{ position: "absolute", right: "1.25rem", top: "50%", transform: "translateY(-50%)", zIndex: 3 }}
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </>
+            )}
+
+            <motion.figure
+              key={gallery[lightbox].src}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                margin: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "0.9rem",
+                maxWidth: "min(1100px, 100%)",
+                maxHeight: "100%",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  width: "min(1100px, 90vw)",
+                  height: "min(72vh, 80vw)",
+                  borderRadius: 14,
+                  overflow: "hidden",
+                  boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+                }}
+              >
+                <Image
+                  src={gallery[lightbox].src}
+                  alt={gallery[lightbox].caption}
+                  fill
+                  sizes="90vw"
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
+              <figcaption
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  fontSize: "0.8rem",
+                  color: "rgba(255,255,255,0.82)",
+                  textAlign: "center",
+                }}
+              >
+                {gallery.length > 1 && (
+                  <span className="mono" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    {lightbox + 1} / {gallery.length}
+                  </span>
+                )}
+                {gallery[lightbox].caption}
+              </figcaption>
+            </motion.figure>
           </motion.div>
         )}
       </AnimatePresence>

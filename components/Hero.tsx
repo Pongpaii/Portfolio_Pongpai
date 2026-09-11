@@ -1,7 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type Variants,
+} from "framer-motion";
 import { ArrowUpRight, FileText, Mail, MapPin } from "lucide-react";
 import {
   SiFigma,
@@ -51,6 +57,10 @@ export default function Hero() {
   const cursorY = useMotionValue(-200);
   const [hoveringCta, setHoveringCta] = useState(false);
 
+  // Pointer position relative to viewport center, in the range [-1, 1].
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+
   const finePointer = useMediaQuery("(pointer: fine)");
   const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const cursorOn = finePointer && !reduceMotion;
@@ -58,15 +68,45 @@ export default function Hero() {
   const springCursorX = useSpring(cursorX, { damping: 40, stiffness: 420, mass: 0.35 });
   const springCursorY = useSpring(cursorY, { damping: 40, stiffness: 420, mass: 0.35 });
 
+  // Smooth, springy parallax drivers shared by the aurora blobs.
+  const px = useSpring(pointerX, { damping: 50, stiffness: 120, mass: 0.6 });
+  const py = useSpring(pointerY, { damping: 50, stiffness: 120, mass: 0.6 });
+
+  // Each aurora layer drifts a different distance for depth.
+  const a1x = useTransform(px, [-1, 1], [-42, 42]);
+  const a1y = useTransform(py, [-1, 1], [-32, 32]);
+  const a2x = useTransform(px, [-1, 1], [34, -34]);
+  const a2y = useTransform(py, [-1, 1], [26, -26]);
+  const a3x = useTransform(px, [-1, 1], [-22, 22]);
+  const a3y = useTransform(py, [-1, 1], [22, -22]);
+
+  // Magnetic CTA cluster — nudges toward the pointer while hovered.
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const magnetX = useMotionValue(0);
+  const magnetY = useMotionValue(0);
+  const springMagnetX = useSpring(magnetX, { damping: 20, stiffness: 260, mass: 0.4 });
+  const springMagnetY = useSpring(magnetY, { damping: 20, stiffness: 260, mass: 0.4 });
+
+  const onCtaMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cursorOn || !ctaRef.current) return;
+    const rect = ctaRef.current.getBoundingClientRect();
+    const relX = e.clientX - (rect.left + rect.width / 2);
+    const relY = e.clientY - (rect.top + rect.height / 2);
+    magnetX.set(relX * 0.15);
+    magnetY.set(relY * 0.3);
+  };
+
   useEffect(() => {
     if (!cursorOn) return;
     const move = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
+      pointerX.set((e.clientX / window.innerWidth) * 2 - 1);
+      pointerY.set((e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
-  }, [cursorOn, cursorX, cursorY]);
+  }, [cursorOn, cursorX, cursorY, pointerX, pointerY]);
 
   return (
     <section
@@ -105,11 +145,11 @@ export default function Hero() {
       )}
 
       <div className="aurora" aria-hidden>
-        <span className="a1" />
-        <span className="a2" />
-        <span className="a3" />
+        <motion.span className="a1" style={cursorOn ? { x: a1x, y: a1y } : undefined} />
+        <motion.span className="a2" style={cursorOn ? { x: a2x, y: a2y } : undefined} />
+        <motion.span className="a3" style={cursorOn ? { x: a3x, y: a3y } : undefined} />
       </div>
-      <div className="grid-lines" aria-hidden />
+      <div className="dot-grid" aria-hidden />
 
       <motion.div
         className="shell"
@@ -127,10 +167,20 @@ export default function Hero() {
 
         <motion.h1
           variants={fadeUp}
-          className="display"
+          className="display hero-name"
           style={{ fontSize: "clamp(2rem, 5.2vw, 3.4rem)", marginBottom: "0.9rem" }}
         >
-          Pongpai Sodsong
+          {"Pongpai Sodsong".split("").map((ch, i) => (
+            <motion.span
+              key={i}
+              className="hero-name-char"
+              whileHover={cursorOn ? { y: -10, color: "var(--accent)" } : undefined}
+              transition={{ type: "spring", stiffness: 500, damping: 18 }}
+              style={{ display: "inline-block", whiteSpace: "pre" }}
+            >
+              {ch}
+            </motion.span>
+          ))}
         </motion.h1>
 
         <motion.p
@@ -144,8 +194,7 @@ export default function Hero() {
           }}
         >
           IT Support / Teaching Assistant{" "}
-          <span style={{ color: "var(--text-3)" }}>@ Com7 · AWS</span> —{" "}
-          <span className="grad-text">Frontend &amp; UX-minded developer</span>
+          <span style={{ color: "var(--text-3)" }}>@ Com7 · AWS</span>
         </motion.p>
 
         <div className="two-col" style={{ alignItems: "end", marginBottom: "2.5rem" }}>
@@ -182,9 +231,21 @@ export default function Hero() {
 
           <motion.div
             variants={fadeUp}
+            ref={ctaRef}
             onMouseEnter={() => setHoveringCta(true)}
-            onMouseLeave={() => setHoveringCta(false)}
-            style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}
+            onMouseMove={onCtaMove}
+            onMouseLeave={() => {
+              setHoveringCta(false);
+              magnetX.set(0);
+              magnetY.set(0);
+            }}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.6rem",
+              x: cursorOn ? springMagnetX : undefined,
+              y: cursorOn ? springMagnetY : undefined,
+            }}
           >
             <a href="mailto:pongpai1112@gmail.com" className="btn btn-primary">
               <Mail size={15} /> Send email
@@ -214,25 +275,25 @@ export default function Hero() {
         {/* Quick facts */}
         <motion.dl
           variants={fadeUp}
-          className="glass"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-            gap: "1px",
+            gap: "0.75rem",
             padding: 0,
-            overflow: "hidden",
             marginBottom: "2.5rem",
           }}
         >
           {quickFacts.map((f) => (
-            <div
+            <motion.div
               key={f.label}
+              whileHover={cursorOn ? { y: -4 } : undefined}
+              transition={{ type: "spring", stiffness: 400, damping: 22 }}
               style={{
+                borderRadius: 14,
                 padding: "1.1rem 1.25rem",
-                boxShadow: "0 0 0 1px var(--border)",
                 background: f.highlight
-                  ? "color-mix(in srgb, var(--accent) 8%, transparent)"
-                  : "transparent",
+                  ? "color-mix(in srgb, var(--accent) 10%, transparent)"
+                  : "var(--surface)",
               }}
             >
               <dt
@@ -249,7 +310,7 @@ export default function Hero() {
               <dd style={{ fontSize: "0.75rem", color: "var(--text-3)", lineHeight: 1.5 }}>
                 {f.label}
               </dd>
-            </div>
+            </motion.div>
           ))}
         </motion.dl>
 
