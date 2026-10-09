@@ -115,6 +115,7 @@ export default function Skills() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-120px" });
   const [view, setView] = useState<"list" | "cloud">("cloud");
+  const [tab, setTab] = useState(0);
 
   return (
     <section id="skills" ref={ref} className="section">
@@ -126,7 +127,7 @@ export default function Skills() {
             justifyContent: "space-between",
             gap: "1.5rem",
             flexWrap: "wrap",
-            marginBottom: "3rem",
+            marginBottom: "2rem",
           }}
         >
           <motion.div
@@ -170,39 +171,53 @@ export default function Skills() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="grid-auto"
             >
-              {stacks.map((s) => (
-                <motion.div
-                  key={s.group}
-                  className="glass"
-                  variants={stagger}
-                  initial="hidden"
-                  animate={inView ? "show" : "hidden"}
-                  style={{ padding: "1.4rem 1.5rem" }}
-                >
-                  <p
-                    className="mono"
-                    style={{
-                      fontSize: "0.68rem",
-                      letterSpacing: "0.13em",
-                      textTransform: "uppercase",
-                      color: "var(--accent)",
-                      marginBottom: "0.35rem",
+              {/* One group at a time instead of four stacked cards */}
+              <div className="skill-tabs" role="tablist" aria-label="Skill groups">
+                {stacks.map((s, i) => (
+                  <button
+                    key={s.group}
+                    type="button"
+                    role="tab"
+                    id={`skill-tab-${i}`}
+                    aria-selected={tab === i}
+                    aria-controls="skill-panel"
+                    tabIndex={tab === i ? 0 : -1}
+                    className="skill-tab"
+                    onClick={() => setTab(i)}
+                    onKeyDown={(e) => {
+                      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+                      e.preventDefault();
+                      const next = (i + (e.key === "ArrowRight" ? 1 : -1) + stacks.length) % stacks.length;
+                      setTab(next);
+                      document.getElementById(`skill-tab-${next}`)?.focus();
                     }}
                   >
                     {s.group}
-                  </p>
-                  <p style={{ fontSize: "0.78rem", color: "var(--text-3)", marginBottom: "1rem" }}>
-                    {s.blurb}
-                  </p>
-                  <ul style={{ listStyle: "none", display: "grid" }}>
-                    {s.items.map((item) => (
-                      <SkillRow key={item.name} item={item} />
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+                  </button>
+                ))}
+              </div>
+
+              <motion.div
+                key={stacks[tab].group}
+                id="skill-panel"
+                role="tabpanel"
+                aria-labelledby={`skill-tab-${tab}`}
+                className="glass"
+                variants={stagger}
+                initial="hidden"
+                animate="show"
+                style={{ padding: "1.25rem 1.5rem" }}
+              >
+                <p style={{ fontSize: "0.8rem", color: "var(--text-3)", marginBottom: "0.75rem" }}>
+                  {stacks[tab].blurb}
+                </p>
+                <ul className="skill-grid">
+                  {stacks[tab].items.map((item) => (
+                    <SkillRow key={item.name} item={item} />
+                  ))}
+                </ul>
+              </motion.div>
             </motion.div>
           ) : (
             <motion.div

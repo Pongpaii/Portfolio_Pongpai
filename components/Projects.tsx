@@ -148,7 +148,7 @@ function ProjectGroup({ meta, position }: { meta: (typeof sections)[number]; pos
       id={`projects-${meta.id}`}
       style={{
         scrollMarginTop: "calc(var(--nav-h) + 16px)",
-        paddingTop: sectionIndex === 0 ? 0 : "clamp(3.5rem, 7vw, 5.5rem)",
+        paddingTop: sectionIndex === 0 ? 0 : "clamp(2.5rem, 5vw, 4rem)",
       }}
     >
       <motion.div

@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import ScrollProgress from "@/components/ScrollProgress";
 import ProjectGallery from "@/components/ProjectGallery";
 import { getProject, orderedProjects, projects, sectionMeta } from "@/lib/projects";
+import { navLinks } from "@/lib/siteConfig";
 
 // Every project is known at build time; anything else is a 404.
 export const dynamicParams = false;
@@ -89,7 +90,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
   return (
     <>
       <ScrollProgress />
-      <Navbar />
+      <Navbar links={navLinks()} />
       <main className="work-page">
         <article className="shell work-shell">
           <Link href={`/#projects-${p.section}`} className="link-arrow" style={{ marginBottom: "2.25rem" }}>

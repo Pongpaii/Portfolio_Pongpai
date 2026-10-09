@@ -73,7 +73,7 @@ export default function UniversityProjects() {
   if (items.length === 0) return null;
 
   return (
-    <section id="projects-university" ref={ref} className="section" style={{ paddingBlock: "clamp(3.5rem, 7vw, 5.5rem)" }}>
+    <section id="projects-university" ref={ref} className="section" style={{ paddingBlock: "clamp(2.75rem, 5.5vw, 4.25rem)" }}>
       <div className="shell">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

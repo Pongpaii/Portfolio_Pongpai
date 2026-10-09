@@ -6,17 +6,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
-const links = [
-  { id: "projects", label: "Work" },
-  { id: "skills", label: "Skills" },
-  { id: "about", label: "Experience" },
-  { id: "certifications", label: "Certificates" },
-  { id: "contact", label: "Contact" },
-];
+type NavLink = { id: string; label: string };
 
-export default function Navbar() {
+/** Links follow the order/visibility in content/site-config.json (see lib/siteConfig.ts). */
+export default function Navbar({ links }: { links: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("projects");
+  const [active, setActive] = useState(links[0]?.id ?? "");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -43,7 +38,7 @@ export default function Navbar() {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [links]);
 
   useEffect(() => {
     document.body.classList.toggle("no-scroll", open);

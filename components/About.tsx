@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView, type Variants } from "framer-motion";
-import { Award, GraduationCap, Languages } from "lucide-react";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, type Variants } from "framer-motion";
+import { Award, ChevronDown, GraduationCap, Languages } from "lucide-react";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 22 },
@@ -74,6 +74,19 @@ const credentials = [
 export default function About() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-120px" });
+  // Start with only the current role(s) expanded to keep the section short.
+  const [open, setOpen] = useState<Set<number>>(
+    () => new Set(roles.flatMap((r, i) => (r.current ? [i] : []))),
+  );
+
+  function toggle(i: number) {
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  }
 
   return (
     <section id="about" ref={ref} className="section">
@@ -124,13 +137,24 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Right — timeline */}
-        <motion.ol variants={stagger} className="timeline" style={{ listStyle: "none", display: "grid", gap: "2.25rem" }}>
-          {roles.map((role) => (
+        {/* Right — timeline (accordion: only the current role is expanded by default) */}
+        <motion.ol variants={stagger} className="timeline" style={{ listStyle: "none", display: "grid", gap: "1.5rem" }}>
+          {roles.map((role, i) => {
+            const isOpen = open.has(i);
+            const panelId = `role-panel-${i}`;
+            return (
             <motion.li key={role.org} variants={fadeUp} style={{ position: "relative" }}>
               <span className="timeline-node" data-current={role.current ? "true" : "false"} aria-hidden />
 
-              <div
+              <h3>
+              <button
+                type="button"
+                className="role-toggle"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggle(i)}
+              >
+              <span
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -140,29 +164,45 @@ export default function About() {
                   marginBottom: "0.15rem",
                 }}
               >
-                <h3 className="display" style={{ fontSize: "1.05rem", fontWeight: 600 }}>
+                <span className="display" style={{ fontSize: "1.05rem", fontWeight: 600 }}>
                   {role.org}
-                </h3>
-                <span
-                  className="mono"
-                  style={{ fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--text-3)", whiteSpace: "nowrap" }}
-                >
-                  {role.period}
                 </span>
-              </div>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+                  <span
+                    className="mono"
+                    style={{ fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--text-3)", whiteSpace: "nowrap" }}
+                  >
+                    {role.period}
+                  </span>
+                  <ChevronDown size={16} className="role-chevron" aria-hidden />
+                </span>
+              </span>
 
-              <p
+              <span
                 style={{
+                  display: "block",
                   fontSize: "0.86rem",
                   color: role.current ? "var(--accent)" : "var(--text-2)",
                   fontWeight: 500,
-                  marginBottom: "0.9rem",
                 }}
               >
                 {role.title} · <span style={{ color: "var(--text-3)" }}>{role.place}</span>
-              </p>
+              </span>
+              </button>
+              </h3>
 
-              <ul className="bullets" style={{ marginBottom: "1rem" }}>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    id={panelId}
+                    key="panel"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ overflow: "hidden" }}
+                  >
+              <ul className="bullets" style={{ margin: "0.9rem 0 1rem" }}>
                 {role.points.map((pt) => (
                   <li key={pt}>{pt}</li>
                 ))}
@@ -187,8 +227,12 @@ export default function About() {
                   </span>
                 ))}
               </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.li>
-          ))}
+            );
+          })}
         </motion.ol>
       </motion.div>
     </section>

@@ -44,7 +44,7 @@ export default function Certifications() {
   return (
     <section id="certifications" ref={ref} className="section">
       <motion.div className="shell" variants={stagger} initial="hidden" animate={inView ? "show" : "hidden"}>
-        <motion.div variants={fadeUp} style={{ marginBottom: "3rem" }}>
+        <motion.div variants={fadeUp} style={{ marginBottom: "2rem" }}>
           <p className="eyebrow" style={{ marginBottom: "1.1rem" }}>
             Learning
           </p>
