@@ -114,7 +114,7 @@ function SkillRow({ item }: { item: Skill }) {
 export default function Skills() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-120px" });
-  const [view, setView] = useState<"list" | "cloud">("list");
+  const [view, setView] = useState<"list" | "cloud">("cloud");
 
   return (
     <section id="skills" ref={ref} className="section">

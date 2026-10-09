@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
@@ -9,6 +10,7 @@ const links = [
   { id: "projects", label: "Work" },
   { id: "skills", label: "Skills" },
   { id: "about", label: "Experience" },
+  { id: "certifications", label: "Certificates" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -74,8 +76,8 @@ export default function Navbar() {
           className="shell"
           style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}
         >
-          <a
-            href="#top"
+          <Link
+            href="/#top"
             className="display"
             style={{ fontSize: "0.95rem", letterSpacing: "-0.02em", display: "flex", alignItems: "center", gap: "0.55rem" }}
           >
@@ -89,7 +91,7 @@ export default function Navbar() {
               }}
             />
             Pongpai
-          </a>
+          </Link>
 
           <nav
             aria-label="Sections"
@@ -99,7 +101,7 @@ export default function Navbar() {
             {links.map((l) => (
               <a
                 key={l.id}
-                href={`#${l.id}`}
+                href={`/#${l.id}`}
                 aria-current={active === l.id ? "true" : undefined}
                 style={{
                   position: "relative",
@@ -132,9 +134,9 @@ export default function Navbar() {
 
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <ThemeToggle />
-            <a href="#contact" className="btn btn-primary btn-sm nav-desktop-cta" style={{ display: "none" }}>
+            <Link href="/#contact" className="btn btn-primary btn-sm nav-desktop-cta" style={{ display: "none" }}>
               Get in touch
-            </a>
+            </Link>
             <button
               type="button"
               className="icon-btn nav-mobile-btn"
@@ -170,7 +172,7 @@ export default function Navbar() {
               {links.map((l, i) => (
                 <motion.a
                   key={l.id}
-                  href={`#${l.id}`}
+                  href={`/#${l.id}`}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 + i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}

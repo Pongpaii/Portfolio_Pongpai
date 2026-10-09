@@ -637,6 +637,359 @@ video {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
 }
 
+/* (Work cards use .grid-auto — same size as the original design.) */
+
+.tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+}
+
+.card-badge {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+/* ============================================================
+   WORK DETAIL PAGE — /work/[slug]
+   ============================================================ */
+.work-page {
+  padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 4rem));
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+.work-shell {
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.work-shell > .link-arrow {
+  align-self: flex-start;
+}
+
+.work-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.work-hero video {
+  width: 100%;
+  max-height: 560px;
+  object-fit: contain;
+  background: #000;
+}
+
+.work-body {
+  max-width: 70ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.work-body p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--text-2);
+}
+
+.work-body h2 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.work-bullets {
+  gap: 0.85rem;
+}
+
+.work-bullets > li {
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.work-sub {
+  list-style: none;
+  margin-top: 0.4rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.work-sub li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.88rem;
+  color: var(--text-3);
+}
+
+.work-sub li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+}
+
+.work-gallery {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
+.work-gallery-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  cursor: zoom-in;
+  padding: 0;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+
+.work-gallery-thumb:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.work-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: clamp(4rem, 8vw, 6rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.work-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.3s, background-color 0.3s, transform 0.3s var(--ease);
+}
+
+.work-pager-link:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+
+.work-pager-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.work-pager-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 560px) {
+  .work-pager {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   ROW LIST — compact, low-emphasis project rows (University)
+   ============================================================ */
+.row-list {
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.row-list > li {
+  border-bottom: 1px solid var(--border);
+}
+
+.row-link {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0.75rem;
+  margin-inline: -0.75rem;
+  border-radius: 10px;
+  transition: background-color 0.25s var(--ease);
+}
+
+.row-link:hover {
+  background: var(--surface-2);
+}
+
+.row-year {
+  font-size: 0.7rem;
+  color: var(--text-3);
+}
+
+.row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.row-title {
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.row-role {
+  font-size: 0.76rem;
+  color: var(--text-3);
+}
+
+.row-tags {
+  display: none;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.row-arrow {
+  color: var(--text-3);
+  transition: color 0.25s, transform 0.3s var(--ease);
+}
+
+.row-link:hover .row-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+@media (min-width: 820px) {
+  .row-link {
+    grid-template-columns: 3.25rem 1fr auto auto;
+    gap: 1.5rem;
+  }
+  .row-tags {
+    display: flex;
+  }
+}
+
+/* ============================================================
+   UNIVERSITY CAROUSEL — auto-scrolling image cards
+   ============================================================ */
+.uni-marquee {
+  padding-block: 0.5rem 1rem;
+}
+
+/* No flex gap: each slide carries its own right margin so -50% lands exactly on the copy. */
+.uni-marquee-track {
+  gap: 0;
+}
+
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+.uni-slide {
+  flex: none;
+  width: 300px;
+  margin-right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: transform 0.4s var(--ease), border-color 0.3s, box-shadow 0.4s var(--ease);
+}
+
+.uni-slide:hover,
+.uni-slide:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.uni-slide-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.uni-slide-media img {
+  transition: transform 0.7s var(--ease);
+}
+
+.uni-slide:hover .uni-slide-media img {
+  transform: scale(1.05);
+}
+
+.uni-slide-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-2);
+}
+
+.uni-slide-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.uni-slide-body .row-title {
+  font-size: 0.86rem;
+}
+
+/* Reduced motion: no auto-scroll — let people swipe/scroll through instead. */
+@media (prefers-reduced-motion: reduce) {
+  .uni-marquee {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .uni-marquee-track {
+    animation: none !important;
+    padding-inline: clamp(1.25rem, 4vw, 2.75rem);
+  }
+}
+
 .two-col {
   display: grid;
   gap: clamp(2rem, 5vw, 4.5rem);
