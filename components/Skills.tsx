@@ -24,8 +24,20 @@ type Skill = { name: string; icon: React.ComponentType<{ size?: number }>; color
 
 const stacks: { group: string; blurb: string; items: Skill[] }[] = [
   {
-    group: "Frontend",
-    blurb: "Interfaces I can design and then actually build",
+    group: "Cloud & Support",
+    blurb: "Where I'm heading — AWS work at Com7",
+    items: [
+      { name: "AWS", icon: FaAws, color: "#FF9900" },
+      { name: "Classroom / Lab support", icon: TbHeadset, color: "#F472B6" },
+      { name: "Power Apps", icon: TbApps, color: "#A855F7" },
+      { name: "Git / GitHub", icon: SiGithub, color: "currentColor" },
+      { name: "Vercel", icon: SiVercel, color: "currentColor" },
+      { name: "Unity", icon: SiUnity, color: "#94A3B8" },
+    ],
+  },
+  {
+    group: "Web Development",
+    blurb: "Apps I've designed, built and shipped",
     items: [
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
       { name: "React / React Native", icon: SiReact, color: "#61DAFB" },
@@ -45,18 +57,6 @@ const stacks: { group: string; blurb: string; items: Skill[] }[] = [
       { name: "C#", icon: TbBrandCSharp, color: "#8B5CF6" },
       { name: "REST API", icon: TbApi, color: "#22C55E" },
       { name: "Power Automate", icon: TbAutomation, color: "#3B82F6" },
-    ],
-  },
-  {
-    group: "Cloud & Support",
-    blurb: "Current focus at Com7",
-    items: [
-      { name: "AWS", icon: FaAws, color: "#FF9900" },
-      { name: "Classroom / Lab support", icon: TbHeadset, color: "#F472B6" },
-      { name: "Power Apps", icon: TbApps, color: "#A855F7" },
-      { name: "Git / GitHub", icon: SiGithub, color: "currentColor" },
-      { name: "Vercel", icon: SiVercel, color: "currentColor" },
-      { name: "Unity", icon: SiUnity, color: "#94A3B8" },
     ],
   },
   {

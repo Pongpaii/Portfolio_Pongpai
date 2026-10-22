@@ -45,13 +45,6 @@ const marqueeItems = [
   { icon: SiHtml5, label: "HTML / CSS" },
 ];
 
-const quickFacts = [
-  { value: "5 months", label: "Current contract @ Com7 · AWS", highlight: true },
-  { value: "Dec 2026", label: "Contract ends · free from Jan 2027", highlight: true },
-  { value: "3.73", label: "GPA · First Class Honors" },
-  { value: "40K+", label: "Followers built as creator" },
-];
-
 export default function Hero() {
   const cursorX = useMotionValue(-200);
   const cursorY = useMotionValue(-200);
@@ -161,7 +154,7 @@ export default function Hero() {
         <motion.div variants={fadeUp} style={{ marginBottom: "1.5rem" }}>
           <span className="chip mono" style={{ textTransform: "uppercase", letterSpacing: "0.1em" }}>
             <span className="dot-live" aria-hidden />
-            On a 5-month contract at Com7 · AWS — until Dec 2026
+            Available from Jan 2027
           </span>
         </motion.div>
 
@@ -193,40 +186,28 @@ export default function Hero() {
             marginBottom: "1.5rem",
           }}
         >
-          IT Support / Teaching Assistant{" "}
-          <span style={{ color: "var(--text-3)" }}>@ Com7 · AWS</span>
+          <span style={{ color: "var(--accent)" }}>Aspiring Cloud Engineer</span>{" "}
+          <span style={{ color: "var(--text-3)" }}>· TA @ Com7 · AWS</span>
         </motion.p>
 
         <div className="two-col" style={{ alignItems: "end", marginBottom: "2.5rem" }}>
           <motion.div variants={fadeUp}>
-            <p className="lede" style={{ maxWidth: "46ch" }}>
-              I support the Education and Enterprise team at Com7 on AWS, mainly as a TA debugging
-              live classrooms for the BOI STEM+ camp. It&apos;s a{" "}
-              <strong style={{ color: "var(--text)", fontWeight: 600 }}>
-                5-month contract that ends in December 2026
-              </strong>
-              , so I&apos;m already talking to teams about what comes next.
+            <p className="lede" style={{ maxWidth: "40ch" }}>
+              I build on AWS and I&apos;m looking for my first cloud role.
             </p>
 
-            <div
+            <span
               style={{
-                display: "flex",
+                display: "inline-flex",
                 alignItems: "center",
-                gap: "1.1rem",
-                flexWrap: "wrap",
-                marginTop: "1.25rem",
+                gap: "0.4rem",
+                marginTop: "1rem",
                 fontSize: "0.8rem",
                 color: "var(--text-3)",
               }}
             >
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
-                <MapPin size={14} /> Bangkok · Phatthanakan
-              </span>
-              <span style={{ width: 1, height: 12, background: "var(--border)" }} aria-hidden />
-              <span style={{ color: "var(--accent)", fontWeight: 600 }}>
-                Available from January 2027
-              </span>
-            </div>
+              <MapPin size={14} /> Bangkok
+            </span>
           </motion.div>
 
           <motion.div
@@ -271,48 +252,6 @@ export default function Hero() {
             </a>
           </motion.div>
         </div>
-
-        {/* Quick facts */}
-        <motion.dl
-          variants={fadeUp}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-            gap: "0.75rem",
-            padding: 0,
-            marginBottom: "2.5rem",
-          }}
-        >
-          {quickFacts.map((f) => (
-            <motion.div
-              key={f.label}
-              whileHover={cursorOn ? { y: -4 } : undefined}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
-              style={{
-                borderRadius: 14,
-                padding: "1.1rem 1.25rem",
-                background: f.highlight
-                  ? "color-mix(in srgb, var(--accent) 10%, transparent)"
-                  : "var(--surface)",
-              }}
-            >
-              <dt
-                className="display"
-                style={{
-                  fontSize: "1.35rem",
-                  letterSpacing: "-0.02em",
-                  marginBottom: "0.3rem",
-                  color: f.highlight ? "var(--accent)" : "var(--text)",
-                }}
-              >
-                {f.value}
-              </dt>
-              <dd style={{ fontSize: "0.75rem", color: "var(--text-3)", lineHeight: 1.5 }}>
-                {f.label}
-              </dd>
-            </motion.div>
-          ))}
-        </motion.dl>
 
         {/* Tech marquee */}
         <motion.div variants={fadeUp} className="marquee" aria-hidden>

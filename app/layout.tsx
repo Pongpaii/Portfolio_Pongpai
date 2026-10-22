@@ -28,9 +28,9 @@ const thai = IBM_Plex_Sans_Thai({
 });
 
 export const metadata: Metadata = {
-  title: "Pongpai Sodsong — Developer & IT Support",
+  title: "Pongpai Sodsong — Cloud & IT Support",
   description:
-    "Portfolio of Pongpai Sodsong — IT Support / Teaching Assistant at Com7 (AWS). Building with Next.js, React, TypeScript, Power Platform and a UX-first mindset.",
+    "Portfolio of Pongpai Sodsong — IT Support / Teaching Assistant at Com7 (AWS), building toward a career in cloud. AWS Cloud Practitioner Essentials, AWS SimuLearn, plus hands-on development experience.",
   keywords: [
     "Pongpai Sodsong",
     "Portfolio",
@@ -41,13 +41,14 @@ export const metadata: Metadata = {
     "Teaching Assistant",
     "Com7",
     "AWS",
-    "UX/UI",
+    "Cloud",
+    "Cloud Practitioner",
   ],
   authors: [{ name: "Pongpai Sodsong" }],
   openGraph: {
-    title: "Pongpai Sodsong — Developer & IT Support",
+    title: "Pongpai Sodsong — Cloud & IT Support",
     description:
-      "IT Support / Teaching Assistant at Com7 (AWS). Frontend, Power Platform and UX-first product work.",
+      "IT Support / Teaching Assistant at Com7 (AWS), building toward a career in cloud.",
     type: "website",
     locale: "en_US",
   },
