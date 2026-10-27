@@ -21,7 +21,7 @@ function SlideCard({ p, hidden }: { p: Project; hidden?: boolean }) {
     >
       <span className="uni-slide-media">
         {p.image ? (
-          <Image src={p.image} alt="" fill sizes="300px" style={{ objectFit: "cover" }} />
+          <Image src={p.image} alt="" fill sizes="220px" style={{ objectFit: "cover" }} />
         ) : (
           <span className="display uni-slide-fallback">{p.title}</span>
         )}
@@ -62,7 +62,7 @@ function RowList({ items }: { items: Project[] }) {
   );
 }
 
-/** University projects, shown just above Contact. Carousel by default, with a plain list view. */
+/** University projects. Two-row carousel by default, with a plain list view. */
 export default function UniversityProjects() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -71,6 +71,10 @@ export default function UniversityProjects() {
   const items = projectsBySection("university");
 
   if (items.length === 0) return null;
+
+  // Two carousel rows (second scrolls the other way); a single row if there are too few items.
+  const half = Math.ceil(items.length / 2);
+  const rows = items.length < 4 ? [items] : [items.slice(0, half), items.slice(half)];
 
   return (
     <section id="projects-university" ref={ref} className="section" style={{ paddingBlock: "clamp(2.75rem, 5.5vw, 4.25rem)" }}>
@@ -122,16 +126,24 @@ export default function UniversityProjects() {
             animate={inView ? { opacity: 1 } : { opacity: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className="marquee uni-marquee"
+            className="uni-rows"
           >
-            <div className="marquee-track uni-marquee-track" style={{ animationDuration: `${items.length * 7}s` }}>
-              {items.map((p) => (
-                <SlideCard key={p.slug} p={p} />
-              ))}
-              {items.map((p) => (
-                <SlideCard key={`${p.slug}-dup`} p={p} hidden />
-              ))}
-            </div>
+            {rows.map((row, r) => (
+              <div key={r} className="marquee uni-marquee">
+                <div
+                  className="marquee-track uni-marquee-track"
+                  data-reverse={r === 1 || undefined}
+                  style={{ animationDuration: `${Math.max(row.length, 3) * 6}s` }}
+                >
+                  {row.map((p) => (
+                    <SlideCard key={p.slug} p={p} />
+                  ))}
+                  {row.map((p) => (
+                    <SlideCard key={`${p.slug}-dup`} p={p} hidden />
+                  ))}
+                </div>
+              </div>
+            ))}
           </motion.div>
         ) : (
           <motion.div

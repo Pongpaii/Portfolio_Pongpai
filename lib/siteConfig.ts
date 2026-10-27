@@ -8,7 +8,7 @@ import rawConfig from "@/content/site-config.json";
  * so the production site stays fully static.
  */
 
-export const SECTION_IDS = ["hero", "projects", "skills", "about", "certifications", "university", "contact"] as const;
+export const SECTION_IDS = ["hero", "projects", "university", "about", "certifications", "skills", "contact"] as const;
 
 export type SectionId = (typeof SECTION_IDS)[number];
 

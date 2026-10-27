@@ -33,6 +33,11 @@ const badges: Badge[] = [
     title: "AWS SimuLearn - Cloud Practitioner - Training Badge",
     issuer: "Amazon Web Services",
   },
+  {
+    id: "2d144263-1886-43e5-8a46-a1cf576c5ea8",
+    title: "AWS Cloud Quest: Cloud Practitioner - Training Badge",
+    issuer: "Amazon Web Services",
+  },
 ];
 
 const CREDLY_HOST = "https://www.credly.com";

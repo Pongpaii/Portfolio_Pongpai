@@ -905,13 +905,22 @@ video {
 /* ============================================================
    UNIVERSITY CAROUSEL — auto-scrolling image cards
    ============================================================ */
+.uni-rows {
+  display: grid;
+  gap: 0.25rem;
+}
+
 .uni-marquee {
-  padding-block: 0.5rem 1rem;
+  padding-block: 0.5rem;
 }
 
 /* No flex gap: each slide carries its own right margin so -50% lands exactly on the copy. */
 .uni-marquee-track {
   gap: 0;
+}
+
+.uni-marquee-track[data-reverse] {
+  animation-direction: reverse;
 }
 
 .marquee:focus-within .marquee-track {
@@ -920,8 +929,8 @@ video {
 
 .uni-slide {
   flex: none;
-  width: 300px;
-  margin-right: 1.25rem;
+  width: 220px;
+  margin-right: 1rem;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
@@ -970,11 +979,11 @@ video {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 0.85rem 1rem 1rem;
+  padding: 0.65rem 0.8rem 0.8rem;
 }
 
 .uni-slide-body .row-title {
-  font-size: 0.86rem;
+  font-size: 0.8rem;
 }
 
 /* Reduced motion: no auto-scroll — let people swipe/scroll through instead. */

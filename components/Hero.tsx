@@ -9,18 +9,8 @@ import {
   type Variants,
 } from "framer-motion";
 import { ArrowUpRight, FileText, Mail, MapPin } from "lucide-react";
-import {
-  SiFigma,
-  SiGithub,
-  SiHtml5,
-  SiLaravel,
-  SiNextdotjs,
-  SiReact,
-  SiTailwindcss,
-  SiTypescript,
-} from "react-icons/si";
-import { FaAws, FaLinkedin } from "react-icons/fa6";
-import { TbBrandCSharp } from "react-icons/tb";
+import { SiGithub } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa6";
 import { useMediaQuery } from "./useMediaQuery";
 
 const stagger: Variants = {
@@ -32,18 +22,6 @@ const fadeUp: Variants = {
   hidden: { opacity: 0, y: 26 },
   show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } },
 };
-
-const marqueeItems = [
-  { icon: FaAws, label: "AWS" },
-  { icon: SiTypescript, label: "TypeScript" },
-  { icon: SiReact, label: "React / React Native" },
-  { icon: SiNextdotjs, label: "Next.js" },
-  { icon: SiTailwindcss, label: "Tailwind CSS" },
-  { icon: SiFigma, label: "Figma" },
-  { icon: SiLaravel, label: "Laravel" },
-  { icon: TbBrandCSharp, label: "C#" },
-  { icon: SiHtml5, label: "HTML / CSS" },
-];
 
 export default function Hero() {
   const cursorX = useMotionValue(-200);
@@ -186,11 +164,10 @@ export default function Hero() {
             marginBottom: "1.5rem",
           }}
         >
-          <span style={{ color: "var(--accent)" }}>Aspiring Cloud Engineer</span>{" "}
-          <span style={{ color: "var(--text-3)" }}>· TA @ Com7 · AWS</span>
+          <span style={{ color: "var(--accent)" }}>Aspiring Cloud Engineer</span>
         </motion.p>
 
-        <div className="two-col" style={{ alignItems: "end", marginBottom: "2.5rem" }}>
+        <div className="two-col" style={{ alignItems: "end" }}>
           <motion.div variants={fadeUp}>
             <p className="lede" style={{ maxWidth: "40ch" }}>
               I build on AWS and I&apos;m looking for my first cloud role.
@@ -252,33 +229,6 @@ export default function Hero() {
             </a>
           </motion.div>
         </div>
-
-        {/* Tech marquee */}
-        <motion.div variants={fadeUp} className="marquee" aria-hidden>
-          <div className="marquee-track">
-            {[...marqueeItems, ...marqueeItems].map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <span
-                  key={`${item.label}-${i}`}
-                  className="mono"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    fontSize: "0.74rem",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "var(--text-3)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <Icon size={16} /> {item.label}
-                </span>
-              );
-            })}
-          </div>
-        </motion.div>
       </motion.div>
 
       <motion.a
