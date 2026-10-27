@@ -119,7 +119,7 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
               ))}
             </div>
 
-            {(p.github || p.live) && (
+            {(p.github || p.live || p.extraLinks?.length) && (
               <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
                 {p.github && (
                   <a href={p.github} target="_blank" rel="noreferrer" className="btn btn-sm">
@@ -131,6 +131,11 @@ export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
                     {p.liveLabel ?? "Live"} <ArrowUpRight size={13} />
                   </a>
                 )}
+                {p.extraLinks?.map((l) => (
+                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="btn btn-sm">
+                    {l.label} <ArrowUpRight size={13} />
+                  </a>
+                ))}
               </div>
             )}
           </header>

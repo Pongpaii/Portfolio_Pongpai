@@ -127,6 +127,11 @@ function ProjectCard({
               {p.liveLabel ?? "Live"} <ArrowUpRight size={14} />
             </a>
           )}
+          {p.extraLinks?.map((l) => (
+            <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className="link-arrow" style={{ color: "var(--accent)" }}>
+              {l.label} <ArrowUpRight size={14} />
+            </a>
+          ))}
         </div>
       </div>
     </motion.article>

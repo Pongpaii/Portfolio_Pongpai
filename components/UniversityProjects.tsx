@@ -15,7 +15,7 @@ function SlideCard({ p }: { p: Project }) {
     <Link href={`/work/${p.slug}`} className="uni-slide">
       <span className="uni-slide-media">
         {p.image ? (
-          <Image src={p.image} alt="" fill sizes="(max-width: 720px) 50vw, (max-width: 1024px) 33vw, 280px" style={{ objectFit: "cover" }} />
+          <Image src={p.image} alt="" fill sizes="(max-width: 720px) 50vw, 360px" style={{ objectFit: "cover" }} />
         ) : (
           <span className="display uni-slide-fallback">{p.title}</span>
         )}

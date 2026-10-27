@@ -17,6 +17,8 @@ type Role = {
   period: string;
   place: string;
   current?: boolean;
+  /** Expanded on first load (current roles are always expanded). */
+  expanded?: boolean;
   tags: string[];
   points: string[];
 };
@@ -41,6 +43,7 @@ const roles: Role[] = [
     title: "Software Developer (Internship)",
     period: "Dec 2025 — Mar 2026",
     place: "Bangkok",
+    expanded: true,
     tags: ["Power Apps", "Power Automate", "SQL Server", "D365 API", "QA"],
     points: [
       "Petty Cash App — turned Figma designs into a working Power Apps solution, building gallery and popup flows around real approval steps.",
@@ -75,9 +78,9 @@ const credentials = [
 export default function About() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-120px" });
-  // Start with only the current role(s) expanded to keep the section short.
+  // Current roles and roles marked `expanded` start open; the rest stay collapsed to keep the section short.
   const [open, setOpen] = useState<Set<number>>(
-    () => new Set(roles.flatMap((r, i) => (r.current ? [i] : []))),
+    () => new Set(roles.flatMap((r, i) => (r.current || r.expanded ? [i] : []))),
   );
 
   function toggle(i: number) {

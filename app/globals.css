@@ -903,7 +903,7 @@ video {
 }
 
 /* ============================================================
-   UNIVERSITY GRID — static image cards (2 cols mobile, 3 tablet, 4 desktop)
+   UNIVERSITY GRID — static image cards (2 cols mobile, 3 from tablet up)
    ============================================================ */
 .uni-grid {
   display: grid;
@@ -914,12 +914,6 @@ video {
 @media (min-width: 720px) {
   .uni-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .uni-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
