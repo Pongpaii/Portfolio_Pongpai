@@ -7,21 +7,15 @@ import { AnimatePresence, motion, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projectsBySection, sectionMeta, type Project } from "@/lib/projects";
 
-type View = "carousel" | "list";
+type View = "grid" | "list";
 
-/** Image card used in the auto-scrolling carousel. */
-function SlideCard({ p, hidden }: { p: Project; hidden?: boolean }) {
+/** Image card used in the grid view. */
+function SlideCard({ p }: { p: Project }) {
   return (
-    <Link
-      href={`/work/${p.slug}`}
-      className="uni-slide"
-      // The second copy of the track only exists to make the loop seamless.
-      aria-hidden={hidden || undefined}
-      tabIndex={hidden ? -1 : undefined}
-    >
+    <Link href={`/work/${p.slug}`} className="uni-slide">
       <span className="uni-slide-media">
         {p.image ? (
-          <Image src={p.image} alt="" fill sizes="220px" style={{ objectFit: "cover" }} />
+          <Image src={p.image} alt="" fill sizes="(max-width: 720px) 50vw, (max-width: 1024px) 33vw, 280px" style={{ objectFit: "cover" }} />
         ) : (
           <span className="display uni-slide-fallback">{p.title}</span>
         )}
@@ -62,19 +56,15 @@ function RowList({ items }: { items: Project[] }) {
   );
 }
 
-/** University projects. Two-row carousel by default, with a plain list view. */
+/** University projects. Static image grid by default, with a plain list view. */
 export default function UniversityProjects() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [view, setView] = useState<View>("carousel");
+  const [view, setView] = useState<View>("grid");
   const meta = sectionMeta("university");
   const items = projectsBySection("university");
 
   if (items.length === 0) return null;
-
-  // Two carousel rows (second scrolls the other way); a single row if there are too few items.
-  const half = Math.ceil(items.length / 2);
-  const rows = items.length < 4 ? [items] : [items.slice(0, half), items.slice(half)];
 
   return (
     <section id="projects-university" ref={ref} className="section" style={{ paddingBlock: "clamp(2.75rem, 5.5vw, 4.25rem)" }}>
@@ -103,7 +93,7 @@ export default function UniversityProjects() {
           </div>
 
           <div className="segmented" role="group" aria-label="Display mode">
-            {(["carousel", "list"] as const).map((v) => (
+            {(["grid", "list"] as const).map((v) => (
               <button
                 key={v}
                 type="button"
@@ -111,53 +101,34 @@ export default function UniversityProjects() {
                 aria-pressed={view === v}
                 onClick={() => setView(v)}
               >
-                {v === "carousel" ? "Carousel" : "List"}
+                {v === "grid" ? "Grid" : "List"}
               </button>
             ))}
           </div>
         </motion.div>
       </div>
 
-      <AnimatePresence mode="wait" initial={false}>
-        {view === "carousel" ? (
+      <div className="shell">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key="carousel"
+            key={view}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : { opacity: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-            className="uni-rows"
-          >
-            {rows.map((row, r) => (
-              <div key={r} className="marquee uni-marquee">
-                <div
-                  className="marquee-track uni-marquee-track"
-                  data-reverse={r === 1 || undefined}
-                  style={{ animationDuration: `${Math.max(row.length, 3) * 6}s` }}
-                >
-                  {row.map((p) => (
-                    <SlideCard key={p.slug} p={p} />
-                  ))}
-                  {row.map((p) => (
-                    <SlideCard key={`${p.slug}-dup`} p={p} hidden />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            key="list"
-            className="shell"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.3 }}
           >
-            <RowList items={items} />
+            {view === "grid" ? (
+              <div className="uni-grid">
+                {items.map((p) => (
+                  <SlideCard key={p.slug} p={p} />
+                ))}
+              </div>
+            ) : (
+              <RowList items={items} />
+            )}
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </section>
   );
 }

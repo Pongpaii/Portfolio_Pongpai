@@ -903,34 +903,27 @@ video {
 }
 
 /* ============================================================
-   UNIVERSITY CAROUSEL — auto-scrolling image cards
+   UNIVERSITY GRID — static image cards (2 cols mobile, 3 tablet, 4 desktop)
    ============================================================ */
-.uni-rows {
+.uni-grid {
   display: grid;
-  gap: 0.25rem;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.uni-marquee {
-  padding-block: 0.5rem;
+@media (min-width: 720px) {
+  .uni-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-/* No flex gap: each slide carries its own right margin so -50% lands exactly on the copy. */
-.uni-marquee-track {
-  gap: 0;
-}
-
-.uni-marquee-track[data-reverse] {
-  animation-direction: reverse;
-}
-
-.marquee:focus-within .marquee-track {
-  animation-play-state: paused;
+@media (min-width: 1024px) {
+  .uni-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .uni-slide {
-  flex: none;
-  width: 220px;
-  margin-right: 1rem;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
@@ -984,19 +977,6 @@ video {
 
 .uni-slide-body .row-title {
   font-size: 0.8rem;
-}
-
-/* Reduced motion: no auto-scroll — let people swipe/scroll through instead. */
-@media (prefers-reduced-motion: reduce) {
-  .uni-marquee {
-    overflow-x: auto;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-  .uni-marquee-track {
-    animation: none !important;
-    padding-inline: clamp(1.25rem, 4vw, 2.75rem);
-  }
 }
 
 .two-col {

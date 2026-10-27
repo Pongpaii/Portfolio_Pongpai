@@ -31,7 +31,8 @@ const roles: Role[] = [
     tags: ["AWS", "IT Support", "Teaching Assistant", "Troubleshooting"],
     points: [
       "Support the Education and Enterprise team on AWS-related work and day-to-day technical requests.",
-      "Main duty: Teaching Assistant for the BOI STEM+ camp classrooms hosted at Koon Hotel.",
+      "Main duty: Lab Teaching Assistant for Architecting on AWS (Com7 Business × BOI STEM++) — the same live-classroom course across all 10 cohorts, Jul 2026 – Jan 2027, at Koon Hotel.",
+      "Guide students step by step through the course's hands-on labs on the AWS Console.",
       "Debug issues live during class so instructors and students never lose momentum.",
     ],
   },

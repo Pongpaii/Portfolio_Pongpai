@@ -57,14 +57,15 @@ export const projects: Project[] = [
     role: "Com7 Public Company Limited (BOI Project) · Jul – Dec 2026",
     year: "2026",
     stack: ["AWS", "Teaching Assistant", "IT Support", "Troubleshooting"],
-    desc: "ผู้ช่วยสอนบูทแคมป์ Architecting on AWS 4 วัน (Com7 Business × BOI STEM++) พาผู้เรียนทำ Lab บน AWS Console แก้ปัญหาสดระหว่างคลาส และซัพพอร์ตงานด้าน AWS ให้ทีม Education & Enterprise",
+    desc: "ผู้ช่วยสอน Lab ในหลักสูตร Architecting on AWS (Com7 Business × BOI STEM++) ทั้ง 10 รุ่น พาผู้เรียนทำ Lab บน AWS Console แก้ปัญหาสดระหว่างคลาส และซัพพอร์ตงานด้าน AWS ให้ทีม Education & Enterprise",
     image: "/images/awslab.jpg",
     video: null,
-    details: `ตำแหน่ง IT Support / Teaching Assistant ที่ Com7 Public Company Limited ภายใต้โครงการ BOI ดูแลงานด้าน AWS ให้ทีม Education & Enterprise โดยหน้าที่หลักคือผู้ช่วยสอนในบูทแคมป์
+    details: `ตำแหน่ง IT Support / Teaching Assistant ที่ Com7 Public Company Limited ภายใต้โครงการ BOI ดูแลงานด้าน AWS ให้ทีม Education & Enterprise โดยหน้าที่หลักคือผู้ช่วยสอน Lab ในหลักสูตร Architecting on AWS
 
-[ Architecting on AWS Bootcamp ]
-• Program: บูทแคมป์ 4 วัน Architecting on AWS (Com7 Business × BOI STEM++) จัดที่ Koon Hotel เตรียมผู้เรียนสู่สาย Cloud Engineer และการสอบ AWS Certified Solutions Architect – Associate
-• Hands-on Labs: พาผู้เรียนทำ Lab บน AWS Console ทีละขั้น ช่วยให้ทุกคนตามทันเนื้อหาในคลาส
+[ Architecting on AWS ]
+• Course: Architecting on AWS — หลักสูตรพื้นฐานการออกแบบโครงสร้าง IT บน AWS สำหรับ Solutions Architect เน้น AWS best practices, design patterns ที่แนะนำ และ case study จากลูกค้า AWS จริง พร้อม Lab แบบ guided hands-on
+• Program: Live classroom (Com7 Business × BOI STEM++) จัดที่ Koon Hotel ช่วง ก.ค. 2026 – ม.ค. 2027 รวม 10 รุ่น ใช้หลักสูตรเดียวกันทุกรุ่น เตรียมผู้เรียนสู่สาย Cloud Engineer และการสอบ AWS Certified Solutions Architect – Associate
+• Hands-on Labs: ช่วย Lab ของหลักสูตร พาผู้เรียนทำบน AWS Console ทีละขั้น ให้ทุกคนตามทันเนื้อหาในคลาส
 • Live Troubleshooting: แก้ปัญหาที่เกิดขึ้นระหว่างทำ Lab แบบสดๆ เพื่อให้ผู้สอนและผู้เรียนเดินหน้าต่อได้โดยไม่สะดุด
 
 [ IT Support ]
@@ -139,6 +140,35 @@ export const projects: Project[] = [
 • Migration 001–018 อยู่ใน supabase/migrations/ · ตาม tasks.md: Phase 0–6 เสร็จแล้ว
 • Phase 7 (ใบเสนอราคา) ทำถึงหน้า list + หน้าสร้าง ส่วนหน้า [id] สำหรับแก้/พิมพ์/เปิดใน POS ยังค้าง
 • Phase 8 (ตรวจงาน, รัน migration บน Supabase, ทดสอบ end-to-end, ทดสอบพิมพ์จริง) ยังไม่ได้ทำ — จำนวนแถวต่อหน้าของตัวแบ่งหน้าเอกสารยังเป็นค่าประมาณที่ยังไม่เคยเทียบกับกระดาษจริง`,
+  },
+  {
+    slug: "iexpense",
+    section: "work",
+    title: "iExpense — Money Flow (AWS version)",
+    role: "Full-stack · Vibe coded · Hosted on AWS",
+    year: "2026",
+    stack: ["Vue 3", "TypeScript", "Vite", "Supabase", "Amazon S3", "CloudFront", "Vibe coded"],
+    desc: "แอปบันทึกรายรับรายจ่ายภาษาไทย ล็อกอินผ่าน Supabase Auth มีกราฟวิเคราะห์รายจ่าย โหมด Demo ให้ลองใช้ทันที เวอร์ชันนี้ deploy บน AWS (S3 + CloudFront)",
+    image: "/images/iexpense/Main.png",
+    video: null,
+    github: null,
+    live: "https://d2lr6s3hzlxn1y.cloudfront.net",
+    liveLabel: "Live app (AWS)",
+    gallery: [
+      { src: "/images/iexpense/Main.png", caption: "หน้าหลัก — การ์ดสรุปยอดและรายการธุรกรรม" },
+      { src: "/images/iexpense/overall.png", caption: "ภาพรวม — กราฟรายรับรายจ่ายและหมวดหมู่" },
+      { src: "/images/iexpense/bubble.png", caption: "ฟองเงิน — ขนาดฟองตามจำนวนครั้งที่จ่ายซ้ำ" },
+      { src: "/images/iexpense/auth.png", caption: "หน้าเข้าสู่ระบบ พร้อมปุ่มเข้าโหมด Demo" },
+    ],
+    details: `แอปบันทึกรายรับรายจ่ายภาษาไทย (Money Flow) พัฒนาแบบ Vibe Coding ด้วย Vue 3 + TypeScript + Vite และใช้ Supabase เป็นฐานข้อมูลและระบบยืนยันตัวตน เวอร์ชันนี้ deploy บน AWS
+
+• Auth & Access: ล็อกอินด้วยอีเมล + รหัสผ่าน ปิดการสมัครสมาชิกเอง (ผู้ดูแลสร้างบัญชีให้) พร้อมฟีเจอร์ลืมรหัสผ่านและหน้าตั้งรหัสใหม่จากลิงก์ในอีเมล
+• Data Layer: ตาราง transactions ผูกกับ auth.users เปิด Row Level Security ให้แต่ละคนเห็นเฉพาะข้อมูลของตัวเอง พร้อม index สำหรับ query ตามผู้ใช้และตามวันที่
+• Visualization: การ์ดสรุปยอด, กราฟแท่งรายรับ-รายจ่าย 6 เดือน, โดนัทแยกหมวดหมู่ที่กดดูรายการในแต่ละสัดส่วนได้ และแท็บ "ฟองเงิน" ที่ขนาดฟองสัมพันธ์กับจำนวนครั้งที่จ่ายซ้ำ
+• Insight: วิเคราะห์รายจ่ายรายเดือนเทียบกับเดือนก่อน และ Money Buddy ช่วยคาดการณ์เงินคงเหลือ
+• Demo Mode: เข้าดูแอปได้โดยไม่ต้องมีบัญชี ใช้ข้อมูลตัวอย่างย้อนหลัง 6 เดือนในหน่วยความจำ ไม่เรียก Supabase และปิดการเพิ่ม/แก้ไข/ลบทั้งหมด
+• Mobile Build: ห่อด้วย Capacitor แล้ว build debug APK บน GitHub Actions (JDK 21 + Android SDK 36) จึงไม่ต้องติดตั้ง Android Studio หรือ Android SDK ในเครื่อง
+• Deploy on AWS: static SPA เก็บบน Amazon S3 และเสิร์ฟผ่าน Amazon CloudFront ฝังค่า env ตอน build โดยใช้ anon public key เท่านั้นเพื่อความปลอดภัย`,
   },
   {
     slug: "tni-teaching-assistant",

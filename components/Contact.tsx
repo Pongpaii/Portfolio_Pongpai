@@ -49,27 +49,25 @@ export default function Contact() {
         animate={inView ? "show" : "hidden"}
         style={{ position: "relative", zIndex: 1 }}
       >
-        <motion.p variants={fadeUp} className="eyebrow" style={{ marginBottom: "1.5rem" }}>
+        <motion.p variants={fadeUp} className="eyebrow" style={{ marginBottom: "1rem" }}>
           Contact
         </motion.p>
 
         <motion.h2
           variants={fadeUp}
           className="display"
-          style={{ fontSize: "clamp(2.4rem, 8vw, 5rem)", marginBottom: "1.5rem" }}
+          style={{ fontSize: "clamp(1.6rem, 3.6vw, 2.25rem)", marginBottom: "1rem" }}
         >
-          Let&apos;s build
-          <br />
-          <span className="grad-text">something together.</span>
+          Let&apos;s build <span className="grad-text">something together.</span>
         </motion.h2>
 
-        <motion.p variants={fadeUp} className="lede" style={{ maxWidth: "48ch", marginBottom: "2.5rem" }}>
+        <motion.p variants={fadeUp} className="lede" style={{ maxWidth: "48ch", marginBottom: "1.75rem" }}>
           My 5-month contract at Com7 (AWS) runs until December 2026, so I&apos;m available from
           January 2027 for cloud roles — cloud support, cloud engineering or AWS-focused teams. Say hi — I
           reply fast.
         </motion.p>
 
-        <motion.div variants={fadeUp} style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginBottom: "2.5rem" }}>
+        <motion.div variants={fadeUp} style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
           <a href={`mailto:${EMAIL}`} className="btn btn-primary">
             <Mail size={15} /> {EMAIL}
           </a>
@@ -101,7 +99,7 @@ export default function Contact() {
         <motion.footer
           variants={fadeUp}
           style={{
-            marginTop: "clamp(3.5rem, 8vw, 6rem)",
+            marginTop: "clamp(2.5rem, 5vw, 3.5rem)",
             paddingTop: "1.5rem",
             borderTop: "1px solid var(--border)",
             display: "flex",
