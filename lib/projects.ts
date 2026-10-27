@@ -143,7 +143,7 @@ export const projects: Project[] = [
   },
   {
     slug: "iexpense",
-    section: "work",
+    section: "university",
     title: "iExpense — Money Flow (AWS version)",
     role: "Full-stack · Vibe coded · Hosted on AWS",
     year: "2026",
@@ -169,43 +169,6 @@ export const projects: Project[] = [
 • Demo Mode: เข้าดูแอปได้โดยไม่ต้องมีบัญชี ใช้ข้อมูลตัวอย่างย้อนหลัง 6 เดือนในหน่วยความจำ ไม่เรียก Supabase และปิดการเพิ่ม/แก้ไข/ลบทั้งหมด
 • Mobile Build: ห่อด้วย Capacitor แล้ว build debug APK บน GitHub Actions (JDK 21 + Android SDK 36) จึงไม่ต้องติดตั้ง Android Studio หรือ Android SDK ในเครื่อง
 • Deploy on AWS: static SPA เก็บบน Amazon S3 และเสิร์ฟผ่าน Amazon CloudFront ฝังค่า env ตอน build โดยใช้ anon public key เท่านั้นเพื่อความปลอดภัย`,
-  },
-  {
-    slug: "tni-teaching-assistant",
-    section: "university",
-    title: "Teaching Assistant — Java & C# @ TNI",
-    role: "Thai-Nichi Institute of Technology · 2024 – 2025",
-    year: "2025",
-    stack: ["Java", "C#", "Mentoring", "Lab support"],
-    desc: "ผู้ช่วยสอนวิชา Java (OOP) และ C# (Multimedia Programming) ดูแลนักศึกษาในห้อง Lab ช่วย Debug โค้ด คุมสอบ และเตรียมความพร้อมระบบ IT ในห้องเรียน",
-    // TODO: add photo, e.g. "/images/tni-ta.jpg"
-    image: null,
-    video: null,
-    details: `ผู้ช่วยสอน (Teaching Assistant) ที่สถาบันเทคโนโลยีไทย-ญี่ปุ่น ดูแลนักศึกษาในคาบปฏิบัติการของวิชาเขียนโปรแกรม
-
-• MTE-107 Object-Oriented Programming (Java): แนะนำนักศึกษาปี 1 เรื่องแนวคิด OOP และช่วย Debug ข้อผิดพลาดทั้ง Syntax, Logic และ Runtime ในคาบ Lab
-• MTE-105 Fundamentals of Multimedia Programming (C#): ช่วยอาจารย์ในคลาสและช่วยนักศึกษาแก้ปัญหาโค้ด C#
-• Exam Proctoring: คุมสอบกลางภาคและปลายภาค เพื่อรักษาความโปร่งใสของการสอบ
-• Classroom IT: เตรียมความพร้อมของระบบ IT ในห้องเรียนก่อนเริ่มคาบเรียนและการสอบ`,
-  },
-  {
-    slug: "poip-animation",
-    section: "university",
-    title: "Content Creator & Animator | Poip Animation",
-    role: "Creator · YouTube & TikTok",
-    year: "2024",
-    stack: ["2D Animation", "Content Strategy", "Data Analysis"],
-    desc: "ดูแลการผลิตคอนเทนต์แอนิเมชันแบบครบวงจร บน YouTube & TikTok จนมียอดผู้ติดตามมากกว่า 40,000+ Followers",
-    image: "/images/content.jpg",
-    video: null,
-    github: null,
-    live: null,
-    details: `บริหารช่องและผลิตสื่ออนิเมชัน Poip Animation ควบคู่กับการวิเคราะห์ Data เพื่อสร้างการเติบโตของ Community
-
-• Content Production: บริหารจัดการการผลิต 2D Animation บน YouTube & TikTok ตั้งแต่ต้นจนจบ จนมียอดผู้ติดตามมากกว่า 40,000+ followers
-• Strategy & Lifecycle: รับผิดชอบ Creative Lifecycle ทั้งหมดด้วยตัวเอง ตั้งแต่การเขียนบท (Scripting), ทำ Storyboard, ตัดต่อ ไปจนถึงการตลาด
-• Performance Optimization: เพิ่ม Viewer Retention ด้วยเทคนิค "Hook" และ "Cliffhanger" พร้อมทั้งวิเคราะห์ค่า CTR/AVD เพื่อนำมาปรับปรุงกลยุทธ์คอนเทนต์
-• Data-Driven Results: ใช้ระบบวิเคราะห์ข้อมูลสถิติหลังบ้าน เพื่อทำความเข้าใจพฤติกรรมผู้ชมและปรับจังหวะการเล่าเรื่องให้ดึงดูดที่สุด`,
   },
 
   // ───────────────────────── University projects ─────────────────────────
