@@ -36,6 +36,7 @@ const roles: Role[] = [
       "Main duty: Lab Teaching Assistant for Architecting on AWS (Com7 Business × BOI STEM++) — the same live-classroom course across all 10 cohorts, Jul 2026 – Jan 2027, at Koon Hotel.",
       "Guide students step by step through the course's hands-on labs on the AWS Console.",
       "Debug issues live during class so instructors and students never lose momentum.",
+      "When not running training, support the team day to day and join events to help out — Quick Workshop, Kiro Workshop, and AWS Workshop.",
     ],
   },
   {

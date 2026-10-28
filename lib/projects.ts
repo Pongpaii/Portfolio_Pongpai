@@ -71,7 +71,8 @@ export const projects: Project[] = [
 • Live Troubleshooting: แก้ปัญหาที่เกิดขึ้นระหว่างทำ Lab แบบสดๆ เพื่อให้ผู้สอนและผู้เรียนเดินหน้าต่อได้โดยไม่สะดุด
 
 [ IT Support ]
-• Team Support: ซัพพอร์ตทีม Education & Enterprise ในงานที่เกี่ยวกับ AWS และคำขอด้านเทคนิคในแต่ละวัน`,
+• Team Support: ซัพพอร์ตทีม Education & Enterprise ในงานที่เกี่ยวกับ AWS และคำขอด้านเทคนิคในแต่ละวัน
+• ช่วงที่ไม่ได้เข้าอบรม: คอยช่วยเหลือทีมในงานต่างๆ และออกงาน Event ร่วมกับทีมเพื่อช่วยซัพพอร์ต เช่น Quick Workshop, Kiro Workshop และ AWS Workshop`,
   },
   {
     slug: "a-host-internship",
