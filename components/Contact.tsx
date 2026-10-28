@@ -62,9 +62,8 @@ export default function Contact() {
         </motion.h2>
 
         <motion.p variants={fadeUp} className="lede" style={{ maxWidth: "48ch", marginBottom: "1.75rem" }}>
-          My 5-month contract at Com7 (AWS) runs until December 2026, so I&apos;m available from
-          January 2027 for cloud roles — cloud support, cloud engineering or AWS-focused teams. Say hi — I
-          reply fast.
+          Open to cloud roles — cloud support, cloud engineering or AWS-focused teams. Say hi — I reply
+          fast.
         </motion.p>
 
         <motion.div variants={fadeUp} style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>

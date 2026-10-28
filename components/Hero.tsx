@@ -129,17 +129,10 @@ export default function Hero() {
         animate="show"
         style={{ position: "relative", zIndex: 1 }}
       >
-        <motion.div variants={fadeUp} style={{ marginBottom: "1.5rem" }}>
-          <span className="chip mono" style={{ textTransform: "uppercase", letterSpacing: "0.1em" }}>
-            <span className="dot-live" aria-hidden />
-            Available from Jan 2027
-          </span>
-        </motion.div>
-
         <motion.h1
           variants={fadeUp}
           className="display hero-name"
-          style={{ fontSize: "clamp(2rem, 5.2vw, 3.4rem)", marginBottom: "0.9rem" }}
+          style={{ fontSize: "clamp(2rem, 5.2vw, 3.4rem)", marginBottom: "1.5rem" }}
         >
           {"Pongpai Sodsong".split("").map((ch, i) => (
             <motion.span
@@ -156,22 +149,34 @@ export default function Hero() {
 
         <motion.p
           variants={fadeUp}
+          className="display"
           style={{
-            fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)",
+            fontSize: "clamp(1.15rem, 2.4vw, 1.6rem)",
             color: "var(--text-2)",
-            fontWeight: 500,
-            letterSpacing: "-0.01em",
-            marginBottom: "1.5rem",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.3,
+            maxWidth: "28ch",
+            marginTop: "-0.6rem",
+            marginBottom: "1.75rem",
           }}
         >
-          <span style={{ color: "var(--accent)" }}>Aspiring Cloud Engineer</span>
+          Building, teaching, <span className="grad-text">and fixing things in real time.</span>
         </motion.p>
 
         <div className="two-col" style={{ alignItems: "end" }}>
           <motion.div variants={fadeUp}>
-            <p className="lede" style={{ maxWidth: "40ch" }}>
-              I build on AWS and I&apos;m looking for my first cloud role.
+            <p className="lede" style={{ maxWidth: "44ch" }}>
+              From a shop&apos;s back-office system to AWS labs for 10 cohorts of learners — I like the
+              part where an idea becomes something real.
             </p>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "1rem" }}>
+              {["AWS Lab TA · Com7", "2 apps live on AWS", "First Class Honors · TNI"].map((t) => (
+                <span key={t} className="chip mono" style={{ fontSize: "0.68rem" }}>
+                  {t}
+                </span>
+              ))}
+            </div>
 
             <span
               style={{
@@ -183,7 +188,7 @@ export default function Hero() {
                 color: "var(--text-3)",
               }}
             >
-              <MapPin size={14} /> Bangkok
+              <MapPin size={14} /> Rayong &amp; Bangkok
             </span>
           </motion.div>
 

@@ -637,7 +637,17 @@ video {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
 }
 
-/* (Work cards use .grid-auto — same size as the original design.) */
+/* Work section: 2 × 2 grid on wide screens, single column on mobile. */
+.grid-2x2 {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 720px) {
+  .grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
 
 .tag {
   font-size: 0.62rem;

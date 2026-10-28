@@ -186,7 +186,7 @@ function ProjectGroup({ meta, position }: { meta: (typeof sections)[number]; pos
         </p>
       </motion.div>
 
-      <div className="grid-auto">
+      <div className={featured ? "grid-2x2" : "grid-auto"}>
         {items.map((p, i) => (
           <ProjectCard key={p.slug} p={p} index={i} inView={inView} />
         ))}

@@ -28,7 +28,7 @@ const roles: Role[] = [
     org: "Com7 Public Company Limited",
     title: "IT Support / Teaching Assistant — AWS",
     period: "2026 — Present",
-    place: "Bangkok",
+    place: "Rayong & Bangkok",
     current: true,
     tags: ["AWS", "IT Support", "Teaching Assistant", "Troubleshooting"],
     points: [

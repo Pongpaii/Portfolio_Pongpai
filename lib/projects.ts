@@ -146,25 +146,25 @@ export const projects: Project[] = [
   },
   {
     slug: "iexpense",
-    section: "university",
+    section: "work",
     title: "iExpense — Money Flow",
-    role: "Full-stack · Vibe coded · Vercel & AWS",
+    role: "Full-stack · Vibe coded · AWS (S3 + CloudFront) & Vercel",
     year: "2026",
-    stack: ["Vue 3", "TypeScript", "Vite", "Supabase", "Vercel", "Amazon S3", "CloudFront", "Vibe coded"],
-    desc: "แอปบันทึกรายรับรายจ่ายภาษาไทย ล็อกอินผ่าน Supabase Auth มีกราฟวิเคราะห์รายจ่าย โหมด Demo ให้ลองใช้ทันที deploy ไว้ 2 ที่ คือ Vercel และ AWS (S3 + CloudFront)",
+    stack: ["Amazon S3", "CloudFront", "Vue 3", "TypeScript", "Vite", "Supabase", "Vercel", "Vibe coded"],
+    desc: "แอปบันทึกรายรับรายจ่ายภาษาไทย host บน AWS (Amazon S3 + CloudFront) ล็อกอินผ่าน Supabase Auth มีกราฟวิเคราะห์รายจ่าย และโหมด Demo ให้ลองใช้ทันที (มีสำรองบน Vercel)",
     image: "/images/iexpense/Main.png",
     video: null,
     github: null,
-    live: "https://iexpense-swart.vercel.app/",
-    liveLabel: "Live app (Vercel)",
-    extraLinks: [{ href: "https://d2lr6s3hzlxn1y.cloudfront.net", label: "Live app (AWS)" }],
+    live: "https://d2lr6s3hzlxn1y.cloudfront.net",
+    liveLabel: "Live app (AWS)",
+    extraLinks: [{ href: "https://iexpense-swart.vercel.app/", label: "Vercel" }],
     gallery: [
       { src: "/images/iexpense/Main.png", caption: "หน้าหลัก — การ์ดสรุปยอดและรายการธุรกรรม" },
       { src: "/images/iexpense/overall.png", caption: "ภาพรวม — กราฟรายรับรายจ่ายและหมวดหมู่" },
       { src: "/images/iexpense/bubble.png", caption: "ฟองเงิน — ขนาดฟองตามจำนวนครั้งที่จ่ายซ้ำ" },
       { src: "/images/iexpense/auth.png", caption: "หน้าเข้าสู่ระบบ พร้อมปุ่มเข้าโหมด Demo" },
     ],
-    details: `แอปบันทึกรายรับรายจ่ายภาษาไทย (Money Flow) พัฒนาแบบ Vibe Coding ด้วย Vue 3 + TypeScript + Vite และใช้ Supabase เป็นฐานข้อมูลและระบบยืนยันตัวตน deploy ไว้ทั้งบน Vercel และ AWS
+    details: `แอปบันทึกรายรับรายจ่ายภาษาไทย (Money Flow) พัฒนาแบบ Vibe Coding ด้วย Vue 3 + TypeScript + Vite และใช้ Supabase เป็นฐานข้อมูลและระบบยืนยันตัวตน host หลักบน AWS (S3 + CloudFront) และมีอีกชุดบน Vercel
 
 • Auth & Access: ล็อกอินด้วยอีเมล + รหัสผ่าน ปิดการสมัครสมาชิกเอง (ผู้ดูแลสร้างบัญชีให้) พร้อมฟีเจอร์ลืมรหัสผ่านและหน้าตั้งรหัสใหม่จากลิงก์ในอีเมล
 • Data Layer: ตาราง transactions ผูกกับ auth.users เปิด Row Level Security ให้แต่ละคนเห็นเฉพาะข้อมูลของตัวเอง พร้อม index สำหรับ query ตามผู้ใช้และตามวันที่
@@ -172,9 +172,9 @@ export const projects: Project[] = [
 • Insight: วิเคราะห์รายจ่ายรายเดือนเทียบกับเดือนก่อน และ Money Buddy ช่วยคาดการณ์เงินคงเหลือ
 • Demo Mode: เข้าดูแอปได้โดยไม่ต้องมีบัญชี ใช้ข้อมูลตัวอย่างย้อนหลัง 6 เดือนในหน่วยความจำ ไม่เรียก Supabase และปิดการเพิ่ม/แก้ไข/ลบทั้งหมด
 • Mobile Build: ห่อด้วย Capacitor แล้ว build debug APK บน GitHub Actions (JDK 21 + Android SDK 36) จึงไม่ต้องติดตั้ง Android Studio หรือ Android SDK ในเครื่อง
-• Deploy: static SPA ฝังค่า env ตอน build โดยใช้ anon public key เท่านั้นเพื่อความปลอดภัย deploy ไว้ 2 ที่
-- Vercel: iexpense-swart.vercel.app
-- AWS: เก็บไฟล์บน Amazon S3 และเสิร์ฟผ่าน Amazon CloudFront`,
+• Deploy: static SPA ฝังค่า env ตอน build โดยใช้ anon public key เท่านั้นเพื่อความปลอดภัย
+- AWS (หลัก): เก็บไฟล์บน Amazon S3 และเสิร์ฟผ่าน Amazon CloudFront (CDN + HTTPS)
+- Vercel (สำรอง): iexpense-swart.vercel.app`,
   },
 
   // ───────────────────────── University projects ─────────────────────────
