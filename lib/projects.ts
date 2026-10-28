@@ -111,7 +111,8 @@ export const projects: Project[] = [
     image: "/images/POS/home-thumbnail.png",
     video: null,
     github: null,
-    live: null,
+    live: "https://d1ztyhp3mm72xg.cloudfront.net/dashboard",
+    liveLabel: "Live demo",
     gallery: [
       { src: "/images/POS/home-thumbnail.png", caption: "หน้าแรกของร้าน — ลูกค้าสั่งงานออนไลน์และติดตามงานได้เอง" },
       { src: "/images/POS/POS.png", caption: "หน้า POS — เลือกลูกค้า สินค้า และคิดราคาตามสูตรของแต่ละแบบ พร้อมเลือกโหมด VAT" },
