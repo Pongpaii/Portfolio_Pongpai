@@ -30,7 +30,7 @@ const thai = IBM_Plex_Sans_Thai({
 export const metadata: Metadata = {
   title: "Pongpai Sodsong — Cloud & IT Support",
   description:
-    "Portfolio of Pongpai Sodsong — IT Support / Teaching Assistant at Com7 (AWS), building toward a career in cloud. AWS Cloud Practitioner Essentials, AWS SimuLearn, plus hands-on development experience.",
+    "Portfolio of Pongpai Sodsong — IT Support / Teaching Assistant at Com7 (AWS), building toward a career in cloud. AWS Cloud Quest, AWS SimuLearn and AWS Knowledge training badges, plus hands-on development experience.",
   keywords: [
     "Pongpai Sodsong",
     "Portfolio",
