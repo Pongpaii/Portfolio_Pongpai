@@ -74,7 +74,7 @@ export default function Certifications() {
           </a>
         </motion.div>
 
-        <div className="grid-auto">
+        <div className="grid-2x2">
           {/* Credly badges — rendered as the same iframe Credly's embed.js would inject */}
           {badges.map((b) => (
             <motion.article
