@@ -58,7 +58,7 @@ export const projects: Project[] = [
     title: "IT Support / Teaching Assistant — AWS @ Com7",
     role: "Com7 Public Company Limited (BOI Project) · Jul – Dec 2026",
     year: "2026",
-    stack: ["AWS", "Teaching Assistant", "IT Support", "Troubleshooting"],
+    stack: ["AWS", "VPC", "Auto Scaling", "High Availability", "Teaching Assistant", "Troubleshooting"],
     desc: "ผู้ช่วยสอน Lab ในหลักสูตร Architecting on AWS (Com7 Business × BOI STEM++) ทั้ง 10 รุ่น พาผู้เรียนทำ Lab บน AWS Console แก้ปัญหาสดระหว่างคลาส และซัพพอร์ตงานด้าน AWS ให้ทีม Education & Enterprise",
     image: "/images/awslab.jpg",
     video: null,
@@ -69,6 +69,22 @@ export const projects: Project[] = [
 • Program: Live classroom (Com7 Business × BOI STEM++) จัดที่ Koon Hotel ช่วง ก.ค. 2026 – ม.ค. 2027 รวม 10 รุ่น ใช้หลักสูตรเดียวกันทุกรุ่น เตรียมผู้เรียนสู่สาย Cloud Engineer และการสอบ AWS Certified Solutions Architect – Associate
 • Hands-on Labs: ช่วย Lab ของหลักสูตร พาผู้เรียนทำบน AWS Console ทีละขั้น ให้ทุกคนตามทันเนื้อหาในคลาส
 • Live Troubleshooting: แก้ปัญหาที่เกิดขึ้นระหว่างทำ Lab แบบสดๆ เพื่อให้ผู้สอนและผู้เรียนเดินหน้าต่อได้โดยไม่สะดุด
+
+[ Lab ในหลักสูตร ]
+• Lab 1: ใช้งาน AWS Management Console คู่กับ AWS CLI เพื่อเข้าใจว่าทุกการกดบนหน้าเว็บคือการเรียก API
+• Lab 2: สร้าง Amazon VPC (10.0.0.0/16) แบ่ง Public subnet และ Private subnet ตั้งค่า Route table, Internet Gateway และ NAT Gateway
+• Lab 3: สร้างฐานข้อมูล Amazon RDS ใน VPC พร้อม Application Load Balancer และ Target group
+• Lab 4: ทำ High Availability กระจายระบบไป 2 Availability Zones ด้วย NAT Gateway ทุก AZ, EC2 Auto Scaling group และ Amazon Aurora DB cluster
+• Lab 5: สร้าง Serverless architecture ด้วย AWS managed services
+• Lab 6: ตั้งค่า Amazon CloudFront distribution โดยใช้ Amazon S3 เป็น origin
+• Lab 7 (Capstone): สร้าง AWS multi-tier architecture เต็มรูปแบบจากสิ่งที่เรียนมาทั้งหมด
+
+[ สิ่งที่ได้เรียนรู้ ]
+• Network Infrastructure: อ่านและออกแบบ Route table ได้ เข้าใจว่าทำไม Private subnet ออกอินเทอร์เน็ตผ่าน NAT Gateway ได้ แต่ภายนอกเข้ามาไม่ได้
+• Auto Scaling & High Availability: ออกแบบระบบให้เพิ่มหรือลดเครื่องตามโหลด และสร้างเครื่องใหม่แทนเครื่องที่เสียเองอัตโนมัติ โดยวางทรัพยากรซ้ำไว้หลาย AZ เพื่อไม่ให้มีจุดเดียวที่พังแล้วล่มทั้งระบบ
+• Database Layer: วางฐานข้อมูลไว้ใน Private subnet และใช้ Aurora Replica เป็นตัวสำรองเมื่อ Primary มีปัญหา
+• Troubleshooting จริง: ปัญหาที่ผู้เรียนเจอบ่อยมาจาก Security group และ Route table ที่ตั้งค่าผิด การช่วยแก้ทุกรุ่นทำให้ไล่หาสาเหตุได้เร็วขึ้นมาก
+• การอธิบายให้คนอื่นเข้าใจ: ต้องเข้าใจแต่ละบริการลึกพอจะตอบได้ว่าทำไมต้องออกแบบแบบนี้ ไม่ใช่แค่ทำตามขั้นตอนได้
 
 [ IT Support ]
 • Team Support: ซัพพอร์ตทีม Education & Enterprise ในงานที่เกี่ยวกับ AWS และคำขอด้านเทคนิคในแต่ละวัน
