@@ -1,10 +1,10 @@
 {
   "sections": [
     { "id": "hero", "enabled": true },
+    { "id": "certifications", "enabled": true },
     { "id": "projects", "enabled": true },
     { "id": "university", "enabled": true },
     { "id": "about", "enabled": true },
-    { "id": "certifications", "enabled": true },
     { "id": "skills", "enabled": true },
     { "id": "contact", "enabled": true }
   ]
