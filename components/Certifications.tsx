@@ -11,9 +11,15 @@ const fadeUp: Variants = {
 
 const stagger: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.09 } } };
 
-type Badge = { id: string; title: string; issuer: string };
+type Badge = { id: string; title: string; issuer: string; kind?: "Certification" | "Badge" };
 
 const badges: Badge[] = [
+  {
+    id: "bf24634d-639c-449a-a35f-e62ace0d9eaa",
+    title: "AWS Certified Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    kind: "Certification",
+  },
   {
     id: "c3f9e68c-0b84-4c5b-abfa-fe17d9b48ffc",
     title: "AWS SimuLearn - Cloud Practitioner - Training Badge",
@@ -100,7 +106,7 @@ export default function Certifications() {
                   alignSelf: "flex-start",
                 }}
               >
-                Badge · Credly
+                {b.kind ?? "Badge"} · Credly
               </span>
               <iframe
                 src={`${CREDLY_HOST}/embedded_badge/${b.id}`}
