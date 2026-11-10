@@ -1182,3 +1182,159 @@ video {
   flex-wrap: wrap;
   margin-top: 1.5rem;
 }
+
+/* ============================================================
+   CERTIFICATIONS — featured cert + compact badge tiles
+   ============================================================ */
+.cert-feature {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+    var(--surface);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.cert-feature-media {
+  display: grid;
+  place-items: center;
+  width: 196px;
+  height: 196px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
+  flex: none;
+}
+
+.cert-feature-media img {
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.18));
+}
+
+.cert-feature-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ok) 35%, transparent);
+}
+
+.cert-feature-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+
+.cert-feature-body .lede {
+  margin-block: 0.2rem 0.5rem;
+}
+
+@media (min-width: 720px) {
+  .cert-feature {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    align-items: center;
+    text-align: left;
+    gap: 2.25rem;
+  }
+  .cert-feature-body {
+    align-items: flex-start;
+  }
+}
+
+.cert-subhead {
+  margin: 2.25rem 0 1rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.badge-grid {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 900px) {
+  .badge-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.badge-grid > li {
+  display: flex;
+}
+
+.badge-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 1.25rem 1rem 1.1rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: transform 0.4s var(--ease), border-color 0.3s, background-color 0.3s, box-shadow 0.4s var(--ease);
+}
+
+.badge-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge-tile img {
+  transition: transform 0.5s var(--ease);
+}
+
+.badge-tile:hover img {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+.badge-tile-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.badge-tile-meta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+.badge-tile-arrow {
+  transition: color 0.25s, transform 0.3s var(--ease);
+}
+
+.badge-tile:hover .badge-tile-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
